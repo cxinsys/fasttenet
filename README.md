@@ -1,2 +1,1 @@
-# fasttenet
-FastTENET
+# FastTENET
