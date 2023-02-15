@@ -1,0 +1,1 @@
+from fasttenet.fasttenet import FASTTENET
