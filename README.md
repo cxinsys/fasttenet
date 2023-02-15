@@ -16,7 +16,7 @@ git clone https://github.com/cxinsys/fasttenet.git
 ```
 
 
-Now, we need to install Nezzle as a module.
+Now, we need to install FastTENET as a module.
 
 ```
 cd fasttenet
