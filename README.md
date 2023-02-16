@@ -1,7 +1,7 @@
 # FastTENET
 
 ## Indroduction
-- FastTENET is a library that supports multi-gpu calculation of the TENET algorithm.
+- FastTENET is a library that supports multi-gpu calculation of the [TENET](https://github.com/neocaleb/TENET) algorithm.
 
 ## Installation
 
