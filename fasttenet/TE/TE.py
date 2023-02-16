@@ -183,6 +183,8 @@ class TE(object):
             tmp_arr = np.ndarray(result_matrix.shape, dtype=result_matrix.dtype, buffer=new_shm.buf)
             tmp_arr[pairs[i_beg:i_end, 0], pairs[i_beg:i_end, 1]] = entropy_final
 
+            new_shm.close()
+
             sem.release()
 
             print("[%s, Batch #%d] Batch processing elapsed time: %f" % (str(self.am.device).upper(), i_iter + 1, time.time() - t_beg_batch))
