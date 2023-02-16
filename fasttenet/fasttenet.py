@@ -19,6 +19,7 @@ class FASTTENET(object):
                  dpath_trj_data=None,
                  dpath_branch_data=None,
                  dpath_tf_data=None,
+                 spath_result_matrix=None,
                  batch_size=None,
                  kp=0.5,
                  percentile=0,
@@ -51,9 +52,23 @@ class FASTTENET(object):
         if dpath_tf_data is not None:
             self._tf = np.loadtxt(dpath_tf_data, dtype=str)
 
+        self._spath_result_matrix = spath_result_matrix
+
         self._refined_exp_data = None
         self._bin_arr = None
         self._result_matrix = None
+
+    def save_result_matrix(self, spath_result_matrix=None):
+        if spath_result_matrix is None:
+            if self._spath_result_matrix is None:
+                raise ValueError("Save path should be refined")
+            spath = self._spath_result_matrix
+
+        if self._result_matrix is None:
+            raise ValueError("Result matrix should be refined")
+
+        np.savetxt(spath, self._result_matrix, delimiter='\t', fmt='%8f')
+        print("Save result matrix: {}".format(spath))
 
     # data refining
 
@@ -231,6 +246,9 @@ class FASTTENET(object):
 
         shm.close()
         shm.unlink()
+
+        if self._result_matrix is not None:
+            self.save_result_matrix(self._spath_result_matrix)
 
         return self._result_matrix
 

@@ -13,20 +13,20 @@ if __name__ == "__main__":
     dpath_branch_data = osp.join(droot, 'cell_selectTuck.txt')
     dpath_tf_data = osp.join(droot, 'mouse_tfs.txt')
 
+    spath_result_matrix = osp.join(droot, "TE_result_matrix.txt")
+
     # Create worker
     # expression data, trajectory data, branch data path is required
     # tf data path is optional
+    # save path is optional
     worker = fte.FASTTENET(dpath_exp_data=dpath_exp_data,
                            dpath_trj_data=dpath_trj_data,
                            dpath_branch_data=dpath_branch_data,
-                           dpath_tf_data=dpath_tf_data)
+                           dpath_tf_data=dpath_tf_data,
+                           spath_result_matrix=spath_result_matrix)
 
-    # if device_ids is None, use whole gpus
+    # if device_ids is not refined, use whole gpus
     result_matrix = worker.work(device='gpu', device_ids=[0, 1, 2, 3, 4, 5, 6, 7],
                                 batch_size=2 ** 15)
 
     print(result_matrix)
-
-    fpath_save_txt = osp.join(droot, "TE_result_matrix.txt")
-
-    np.savetxt(fpath_save_txt, result_matrix, delimiter='\t', fmt='%8f')
