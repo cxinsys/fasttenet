@@ -9,6 +9,7 @@ from scipy.signal import savgol_filter
 
 from fasttenet.data import load_exp_data, load_time_data
 from fasttenet.TE import TE
+from fasttenet.utils import get_gpu_list
 
 class FASTTENET(object):
     def __init__(self,
@@ -141,7 +142,10 @@ class FASTTENET(object):
 
         if not device_ids:
             if not self._device_ids:
-                self._device_ids = device_ids = [0]
+                if 'gpu' or 'cuda' in device:
+                    self._device_ids = get_gpu_list()
+                else:
+                    self._device_ids = device_ids = [0]
             device_ids = self._device_ids
 
         if not batch_size:

@@ -1,0 +1,1 @@
+from fasttenet.utils.utils import get_gpu_list
