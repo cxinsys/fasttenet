@@ -4,13 +4,32 @@
 - FastTENET is a library that supports multi-gpu calculation of the [TENET](https://github.com/neocaleb/TENET) algorithm.
 
 ## Installation
+- :snake: [Anaconda](https://www.anaconda.com) is recommended to use and develop fastTENET.
+- :penguin: Linux distros are tested and recommended to use and develop fastTENET.
 
-### Dependency
-- python3 (<3.10)
-- statsmodels
+### Anaconda virtual environment
+
+After installing anaconda, create a conda virtual environment for fastTENET.
+In the following command, you can change the Python version
+(e.g.,`python=3.7` or `python=3.9`).
+
+```
+conda create -n fastTENET python=3.9
+```
+
+Now, we can activate our virtual environment for LPF as follows.
+
+```
+conda activate fastTENET
+```
 
 FastTENET requires following backend-specific dependencies to be installed:
 - CuPy: [Installing CuPy from Conda-Forge with cudatoolkit](https://docs.cupy.dev/en/stable/install.html#installing-cupy-from-conda-forge)
+
+Install Cupy from Conda-Forge with cudatoolkit supported by your driver
+```angular2html
+conda install -c conda-forge cupy cudatoolkit=1x.x (check yout CUDA version)
+```
 
 ### Install from GitHub repository
 First, clone the recent version of this repository.
