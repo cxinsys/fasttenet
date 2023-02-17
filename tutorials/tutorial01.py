@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # expression data, trajectory data, branch data path is required
     # tf data path is optional
     # save path is optional
-    worker = fte.FASTTENET(dpath_exp_data=dpath_exp_data,
+    worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
                            dpath_trj_data=dpath_trj_data,
                            dpath_branch_data=dpath_branch_data,
                            dpath_tf_data=dpath_tf_data,

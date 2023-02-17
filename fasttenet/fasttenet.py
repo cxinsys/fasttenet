@@ -11,7 +11,7 @@ from fasttenet.data import load_exp_data, load_time_data
 from fasttenet.tenet import TE
 from fasttenet.utils import get_gpu_list
 
-class FASTTENET(object):
+class FastTENET(object):
     def __init__(self,
                  device=None,
                  device_ids=None,

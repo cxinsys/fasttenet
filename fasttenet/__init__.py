@@ -1,1 +1,1 @@
-from fasttenet.fasttenet import FASTTENET
+from fasttenet.fasttenet import FastTENET
