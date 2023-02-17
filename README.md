@@ -34,7 +34,7 @@ python setup.py install
 
 FastTENET class requires data path as parameter
 
-##### parameters
+#### parameters
 - **dpath_exp_data**: expression data path, required
 - **dpath_trj_data**: trajectory data path, required
 - **dpath_branch_data**: branch(cell select) data path, required
@@ -56,7 +56,7 @@ worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
 
 #### Run FastTENET
 
-##### parameters
+#### parameters
 - **device**: optional, default: 'cpu'
 - **device_ids**: optional, default: [0] (cpu), [list of whole gpu devices] (gpu) 
 - **batch_size**: Required
