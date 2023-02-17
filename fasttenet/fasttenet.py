@@ -62,13 +62,13 @@ class FastTENET(object):
         if spath_result_matrix is None:
             if self._spath_result_matrix is None:
                 raise ValueError("Save path should be refined")
-            spath = self._spath_result_matrix
+            spath_result_matrix = self._spath_result_matrix
 
         if self._result_matrix is None:
             raise ValueError("Result matrix should be refined")
 
-        np.savetxt(spath, self._result_matrix, delimiter='\t', fmt='%8f')
-        print("Save result matrix: {}".format(spath))
+        np.savetxt(spath_result_matrix, self._result_matrix, delimiter='\t', fmt='%8f')
+        print("Save result matrix: {}".format(spath_result_matrix))
 
     # data refining
 
