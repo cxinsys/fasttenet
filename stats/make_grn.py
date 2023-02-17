@@ -9,10 +9,10 @@ import scipy.stats
 import statsmodels.sandbox.stats.multicomp
 import networkx as nx
 
-droot = osp.abspath(r"D:\대학\OneDrive - 중앙대학교\대원교수님학부연구\TENET\fasttenet test")
+droot = osp.abspath("./")
 
 kw = 0.5
-fpath_gene_name = osp.join(droot, "gene_name_Tuck.npy")
+fpath_gene_name = osp.join(droot, "expression_dataTuck_node_name.npy")
 fpath_binary = osp.join(droot, f"TE_result_matrix.npy")
 fpath_ed = osp.join(droot, f"TE_result_matrix.txt")
 

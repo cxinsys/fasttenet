@@ -1,1 +1,1 @@
-from fasttenet.data.fileio import load_exp_data, load_time_data
+from fasttenet.data.fileio import load_exp_data, load_time_data, make_binary

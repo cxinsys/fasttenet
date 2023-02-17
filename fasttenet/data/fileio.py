@@ -3,19 +3,36 @@ import os.path as osp
 
 import numpy as np
 
-def load_exp_data(dpath):
-    if dpath[:-3]=="npy":
-        exp_data = np.load(dpath, dtype=str)
+def load_exp_data(dpath, make_binary=False):
+    fpath_binary = dpath[:-4]+'.npy'
+    if osp.isfile(fpath_binary):
+        print('Binary file already exist, load data from binary file')
+        exp_data = np.load(fpath_binary)
+        node_name = np.load(fpath_binary[:-4]+'_node_name.npy')
     else:
         exp_data = np.loadtxt(dpath, delimiter=',', dtype=str)
+        node_name = exp_data[0, 1:]
+        exp_data = exp_data[1:, 1:].T.astype(np.float32)
 
-    node_name = exp_data[0, 1:]
-    exp_data = exp_data[1:, 1:].T.astype(np.float32)
+        if make_binary==True:
+            np.save(dpath[:-4] + '_node_name.npy', node_name)
+            np.save(dpath[:-4] + '.npy', exp_data)
 
     return node_name, exp_data
 
 def load_time_data(dpath, dtype=np.float32):
     return np.loadtxt(dpath, dtype=dtype)
+
+def make_binary(fpath_exp_data):
+    droot = osp.dirname(fpath_exp_data)
+    exp_data = np.loadtxt(fpath_exp_data, delimiter=',', dtype=str)
+
+    node_name = exp_data[0, 1:]
+    exp_data = exp_data[1:, 1:].T.astype(np.float32)
+
+    np.save(osp.join(droot, osp.basename(fpath_exp_data)[:-4]+'_node_name.npy'), node_name)
+    np.save(osp.join(droot, osp.basename(fpath_exp_data)[:-4]+'.npy'), exp_data)
+    print('Binary file save at {}'.format(droot))
 
 # def load_exp_data(droot, fname_trj, fname_ts, fname_exp, binarization=True):
 #     droot = osp.abspath(droot)

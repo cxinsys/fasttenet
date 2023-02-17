@@ -25,6 +25,7 @@ class FastTENET(object):
                  percentile=0,
                  win_length=10,
                  polyorder=3,
+                 make_binary=False
                  ):
 
         self._kp = kp
@@ -43,7 +44,7 @@ class FastTENET(object):
         if not dpath_branch_data:
             raise ValueError("Branch data should be refined")
 
-        self._node_name, self._exp_data = load_exp_data(dpath_exp_data)
+        self._node_name, self._exp_data = load_exp_data(dpath_exp_data, make_binary)
         self._trajectory = load_time_data(dpath_trj_data, dtype=np.float32)
         self._branch = load_time_data(dpath_branch_data, dtype=np.int32)
 
