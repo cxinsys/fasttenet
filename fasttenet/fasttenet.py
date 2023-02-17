@@ -8,7 +8,7 @@ import numpy as np
 from scipy.signal import savgol_filter
 
 from fasttenet.data import load_exp_data, load_time_data
-from fasttenet.TENET import TE
+from fasttenet.tenet import TE
 from fasttenet.utils import get_gpu_list
 
 class FASTTENET(object):
@@ -138,7 +138,7 @@ class FASTTENET(object):
 
         return self._bin_arr
 
-    # multiprocessing worker(calculate TENET)
+    # multiprocessing worker(calculate tenet)
 
     def work(self,
              device=None,
@@ -225,7 +225,7 @@ class FASTTENET(object):
             i_end = i_beg + n_subpairs
 
             device_name = device + ":" + str(device_ids[i])
-            # print("TENET device: {}".format(device_name))
+            # print("tenet device: {}".format(device_name))
             te = TE(device=device_name)
 
             _process = Process(target=te.solve, args=(batch_size,
