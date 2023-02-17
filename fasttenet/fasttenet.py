@@ -141,7 +141,7 @@ class FastTENET(object):
 
     # multiprocessing worker(calculate tenet)
 
-    def work(self,
+    def run(self,
              device=None,
              device_ids=None,
              batch_size=None,

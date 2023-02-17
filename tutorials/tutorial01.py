@@ -1,19 +1,30 @@
 import os
 import os.path as osp
+import argparse
 
 import numpy as np
 
 import fasttenet as fte
 
 if __name__ == "__main__":
-    droot = osp.abspath('./')
-    # dpath_exp_data = osp.join(droot, 'expression_data_ex.csv')
-    dpath_exp_data = osp.join(droot, 'expression_dataTuck.csv')
-    dpath_trj_data = osp.join(droot, 'pseudotimeTuck.txt')
-    dpath_branch_data = osp.join(droot, 'cell_selectTuck.txt')
-    dpath_tf_data = osp.join(droot, 'mouse_tfs.txt')
+    parser = argparse.ArgumentParser(description='dpath parser')
+    parser.add_argument('--fp_exp', type=str, dest='fp_exp', required=True)
+    parser.add_argument('--fp_trj', type=str, dest='fp_trj', required=True)
+    parser.add_argument('--fp_br', type=str, dest='fp_br', required=True)
+    parser.add_argument('--fp_tf', type=str, dest='fp_tf', required=True)
+    parser.add_argument('--sp_rm', type=str, dest='sp_rm', required=False)
 
-    spath_result_matrix = osp.join(droot, "TE_result_matrix.txt")
+    args = parser.parse_args()
+
+
+    droot = osp.abspath('./')
+    # dpath_exp_data = osp.abspath(args.fp_exp)
+    dpath_exp_data = osp.abspath(args.fp_exp)
+    dpath_trj_data = osp.abspath(args.fp_trj)
+    dpath_branch_data = osp.abspath(args.fp_br)
+    dpath_tf_data = osp.abspath(args.fp_tf)
+
+    spath_result_matrix = osp.abspath(args.sp_rm)
 
     # Create worker
     # expression data, trajectory data, branch data path is required
@@ -26,13 +37,7 @@ if __name__ == "__main__":
                            spath_result_matrix=spath_result_matrix, # Optional
                            make_binary=True) # Optional, default: False
 
-    result_matrix = worker.work(device='gpu', # Optional, default: 'cpu'
-                                device_ids=[0, 1, 2, 3, 4, 5, 6, 7], # Optional, if device is 'gpu', use whole gpus
-                                batch_size=2 ** 16, # Required
-                                kp=0.5, # Optional, default: 0.5
-                                percentile=0, # Optional, default: 0
-                                win_length=10, # Optional, default: 10
-                                polyorder=3 # Optional, default: 3
-                                )
+    result_matrix = worker.run(device='gpu', device_ids=[0, 1, 2, 3, 4, 5, 6, 7], batch_size=2 ** 16, kp=0.5,
+                               percentile=0, win_length=10, polyorder=3)
 
     print(result_matrix)
