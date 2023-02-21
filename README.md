@@ -134,4 +134,4 @@ te_result_grn.fdr0.01.sif, te_result_grn.fdr0.01.sif.outdegrees.txt
 
 ## TODO
 
-- [x] add 'jax' backend module
+- [ ] add 'jax' backend module
