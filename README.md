@@ -131,3 +131,7 @@ python stats/make_grn.py fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_
 ```angular2html
 te_result_grn.fdr0.01.sif, te_result_grn.fdr0.01.sif.outdegrees.txt
 ```
+
+## TODO
+
+- [ ] add 'jax' backend module
