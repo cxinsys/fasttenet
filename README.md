@@ -4,23 +4,23 @@
 - FastTENET is a library that supports multi-gpu acceleration of the [TENET](https://github.com/neocaleb/TENET) algorithm.
 
 ## Installation
-- :snake: [Anaconda](https://www.anaconda.com) is recommended to use and develop fastTENET.
-- :penguin: Linux distros are tested and recommended to use and develop fastTENET.
+- :snake: [Anaconda](https://www.anaconda.com) is recommended to use and develop FastTENET.
+- :penguin: Linux distros are tested and recommended to use and develop FastTENET.
 
 ### Anaconda virtual environment
 
-After installing anaconda, create a conda virtual environment for fastTENET.
+After installing anaconda, create a conda virtual environment for FastTENET.
 In the following command, you can change the Python version
 (e.g.,`python=3.7` or `python=3.9`).
 
 ```
-conda create -n fastTENET python=3.9
+conda create -n fasttenet python=3.9
 ```
 
-Now, we can activate our virtual environment for LPF as follows.
+Now, we can activate our virtual environment for FastTENET as follows.
 
 ```
-conda activate fastTENET
+conda activate fasttenet
 ```
 
 FastTENET requires following backend-specific dependencies to be installed:
@@ -28,8 +28,24 @@ FastTENET requires following backend-specific dependencies to be installed:
 
 Install Cupy from Conda-Forge with cudatoolkit supported by your driver
 ```angular2html
-conda install -c conda-forge cupy cudatoolkit=xx.x (check yout CUDA version)
+conda install -c conda-forge cupy cudatoolkit=xx.x (check your CUDA version)
 ```
+
+- JAX: [Installing JAX refer to the installation guide in the project README](https://github.com/google/jax#installation)
+
+**You must first install [CUDA](https://developer.nvidia.com/cuda-downloads) and [CuDNN](https://developer.nvidia.com/cudnn) before install JAX**
+
+After install CUDA and CuDNN you can specify a particular CUDA and CuDNN version for jax explicitly
+```angular2html
+pip install --upgrade pip
+
+# Installs the wheel compatible with Cuda >= 11.x and cudnn >= 8.6
+pip install "jax[cuda11_cudnn86]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+```
+
+JAX preallocate 90% of the totla GPU memory when the first JAX operation is run \
+Use 'XLA_PYTHON_CLIENT_PREALLOCATE=false' to disables the preallocation behavior\
+(https://jax.readthedocs.io/en/latest/gpu_memory_allocation.html)
 
 ### Install from GitHub repository
 First, clone the recent version of this repository.
@@ -134,4 +150,4 @@ te_result_grn.fdr0.01.sif, te_result_grn.fdr0.01.sif.outdegrees.txt
 
 ## TODO
 
-- [ ] add 'jax' backend module
+- [x] add 'jax' backend module
