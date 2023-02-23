@@ -22,14 +22,18 @@ Now, we can activate our virtual environment for FastTENET as follows.
 ```
 conda activate fasttenet
 ```
+<br>
 
 FastTENET requires following backend-specific dependencies to be installed:
+
+
 - CuPy: [Installing CuPy from Conda-Forge with cudatoolkit](https://docs.cupy.dev/en/stable/install.html#installing-cupy-from-conda-forge)
 
 Install Cupy from Conda-Forge with cudatoolkit supported by your driver
 ```angular2html
 conda install -c conda-forge cupy cudatoolkit=xx.x (check your CUDA version)
 ```
+<br>
 
 - JAX: [Installing JAX refer to the installation guide in the project README](https://github.com/google/jax#installation)
 
