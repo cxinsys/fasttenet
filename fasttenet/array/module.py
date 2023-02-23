@@ -5,6 +5,13 @@ try:
 except (ModuleNotFoundError, ImportError) as err:
     print("[WARNING] Cannot use GPU computing based on CuPy")
 
+try:
+    import jax
+    from jax import device_put
+    import jax.numpy as jnp
+except (ModuleNotFoundError, ImportError) as err:
+    print("[WARNING] Cannot use GPU computing based on Jax")
+
 def parse_device(device):
     if device is None:
         return "cpu", 0
@@ -17,17 +24,19 @@ def parse_device(device):
         _device, _device_id = device.split(":")
         _device_id = int(_device_id)
 
-    if _device not in ["cpu", "gpu", "cuda"]:
+    if _device not in ["cpu", "gpu", "cuda", "cupy", "jax"]:
         raise ValueError("device should be one of 'cpu', "\
-                         "'gpu', or 'cuda', not %s" %(device))
+                         "'gpu', or 'cuda', 'cupy', 'jax' not %s" %(device))
 
     return _device, _device_id
 
 def get_array_module(device):
     _device, _device_id = parse_device(device)
 
-    if "gpu" in _device or "cuda" in _device:
+    if "gpu" in _device or "cuda" in _device or "cupy" in _device:
         return CuPyModule(_device, _device_id)
+    elif "jax" in _device:
+        return JaxModule(_device, _device_id)
     else:
         return NumpyModule(_device, _device_id)
 
@@ -204,3 +213,61 @@ class CuPyModule(NumpyModule):
     def argsort(self, *args, **kwargs):
         with cp.cuda.Device(self.device_id):
             return cp.argsort(*args, **kwargs)
+
+class JaxModule(NumpyModule):
+    def __init__(self, device=None, device_id=None):
+        super().__init__(device, device_id)
+
+    def __enter__(self):
+        return self._device.__enter__()
+
+    def __exit__(self, *args, **kwargs):
+        return self._device.__exit__(*args, **kwargs)
+
+    def array(self, *args, **kwargs):
+        return device_put(jnp.array(*args, **kwargs), jax.devices()[self.device_id])
+
+    def take(self, *args, **kwargs):
+        return jnp.take(*args, **kwargs)
+
+    def repeat(self, *args, **kwargs):
+        return jnp.repeat(*args, **kwargs)
+
+    def concatenate(self, *args, **kwargs):
+        return jnp.concatenate(*args, **kwargs)
+
+    def stack(self, *args, **kwargs):
+        return jnp.stack(*args, **kwargs)
+
+    def unique(self, *args, **kwargs):
+        return jnp.unique(*args, **kwargs)
+
+    def zeros(self, *args, **kwargs):
+        return jnp.zeros(*args, **kwargs)
+
+    def lexsort(self, *args, **kwargs):
+        return jnp.lexsort(*args, **kwargs)
+
+    def arange(self, *args, **kwargs):
+        return device_put(jnp.arange(*args, **kwargs), jax.devices()[self.device_id])
+
+    def multiply(self, *args, **kwargs):
+        return jnp.multiply(*args, **kwargs)
+
+    def subtract(self, *args, **kwargs):
+        return jnp.subtract(*args, **kwargs)
+
+    def divide(self, *args, **kwargs):
+        return jnp.divide(*args, **kwargs)
+
+    def log2(self, *args, **kwargs):
+        return jnp.log2(*args, **kwargs)
+
+    def bincount(self, *args, **kwargs):
+        return jnp.bincount(*args, **kwargs)
+
+    def asnumpy(self, *args, **kwargs):
+        return np.asarray(*args, **kwargs)
+
+    def argsort(self, *args, **kwargs):
+        return jnp.argsort(*args, **kwargs)

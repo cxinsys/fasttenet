@@ -158,7 +158,7 @@ class FastTENET(object):
 
         if not device_ids:
             if not self._device_ids:
-                if 'gpu' or 'cuda' in device:
+                if 'gpu' or 'cuda' or 'cupy' or 'jax' in device:
                     self._device_ids = get_gpu_list()
                 else:
                     self._device_ids = device_ids = [0]
@@ -217,9 +217,9 @@ class FastTENET(object):
         if "cpu" in device:
             print("[CPU device selected]")
             print("[Num. Pairs: {}, Batch Size: {}]".format(n_pairs, batch_size))
-        elif "gpu" in device:
+        else:
             print("[GPU device selected]")
-            print("[Num. {}S: {}, Num. Pairs: {}, Num. GPU_Pairs: {}, Batch Size: {}]".format(device.upper(), n_gpus, n_pairs,
+            print("[Num. GPUS: {}, Num. Pairs: {}, Num. GPU_Pairs: {}, Batch Size: {}]".format(n_gpus, n_pairs,
                                                                                               n_subpairs, batch_size))
 
         for i, i_beg in enumerate(range(0, n_pairs, n_subpairs)):

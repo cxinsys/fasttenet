@@ -115,7 +115,7 @@ class TE(object):
         for i_iter, i_beg in enumerate(range(0, n_pairs, batch_size)):
             t_beg_batch = time.time()
 
-            print("[%s, Batch #%d]" % (str(self.am.device).upper(), i_iter + 1))
+            print("[%s ID: %d, Batch #%d]" % (str(self.am.device).upper(), self.am.device_id, i_iter + 1))
 
             i_end = i_beg + batch_size
             inds_pair = self.am.arange(len(pairs[i_beg:i_end]))
@@ -140,22 +140,22 @@ class TE(object):
             uvals_xt1_xt_yt, cnts_xt1_xt_yt = self.am.unique(pair_vals, return_counts=True, axis=0)
 
             subuvals_xt1_xt, n_subuvals_xt1_xt = self.am.unique(uvals_xt1_xt_yt[:, :-1], return_counts=True, axis=0)
-            subuvals_xt_yt, n_subuvals_xt_yt = self.am.unique(self.am.take(uvals_xt1_xt_yt, [0, 2, 3], axis=1), return_counts=True, axis=0)
-            subuvals_xt, n_subuvals_xt = self.am.unique(self.am.take(uvals_xt1_xt_yt, [0, 2], axis=1), return_counts=True, axis=0)
+            subuvals_xt_yt, n_subuvals_xt_yt = self.am.unique(self.am.take(uvals_xt1_xt_yt, np.array([0, 2, 3]), axis=1), return_counts=True, axis=0)
+            subuvals_xt, n_subuvals_xt = self.am.unique(self.am.take(uvals_xt1_xt_yt, np.array([0, 2]), axis=1), return_counts=True, axis=0)
 
             uvals_xt1_xt, cnts_xt1_xt = self.am.unique(pair_vals[:, :-1], return_counts=True, axis=0)
-            uvals_xt_yt, cnts_xt_yt = self.am.unique(self.am.take(pair_vals, [0, 2, 3], axis=1), return_counts=True, axis=0)
-            uvals_xt, cnts_xt = self.am.unique(self.am.take(pair_vals, [0, 2], axis=1), return_counts=True, axis=0)
+            uvals_xt_yt, cnts_xt_yt = self.am.unique(self.am.take(pair_vals, np.array([0, 2, 3]), axis=1), return_counts=True, axis=0)
+            uvals_xt, cnts_xt = self.am.unique(self.am.take(pair_vals, np.array([0, 2]), axis=1), return_counts=True, axis=0)
 
             cnts_xt1_xt = self.am.repeat(cnts_xt1_xt, n_subuvals_xt1_xt)
 
             cnts_xt_yt = self.am.repeat(cnts_xt_yt, n_subuvals_xt_yt)
-            ind_xt_yt = self.am.lexsort(self.am.take(uvals_xt1_xt_yt, [3, 2, 0], axis=1).T)
+            ind_xt_yt = self.am.lexsort(self.am.take(uvals_xt1_xt_yt, np.array([3, 2, 0]), axis=1).T)
             ind2ori_xt_yt = self.am.argsort(ind_xt_yt)
             cnts_xt_yt = self.am.take(cnts_xt_yt, ind2ori_xt_yt)
 
             cnts_xt = self.am.repeat(cnts_xt, n_subuvals_xt)
-            ind_xt = self.am.lexsort(self.am.take(uvals_xt1_xt_yt, [2, 0], axis=1).T)
+            ind_xt = self.am.lexsort(self.am.take(uvals_xt1_xt_yt, np.array([2, 0]), axis=1).T)
             ind2ori_xt = self.am.argsort(ind_xt)
             cnts_xt = self.am.take(cnts_xt, ind2ori_xt)
 
