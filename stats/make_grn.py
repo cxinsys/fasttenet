@@ -21,8 +21,8 @@ args = parser.parse_args()
 droot = osp.dirname(args.fp_rm)
 
 kw = 0.5
-fpath_nn = osp.abspath(args.fp_rm)
-fpath_rm = osp.abspath(args.fp_nn)
+fpath_rm = osp.abspath(args.fp_rm)
+fpath_nn = osp.abspath(args.fp_nn)
 
 # fpath_binary = osp.join(droot, "TE_result_matrix_ex02.npy")
 # fpath_ed = osp.join(droot, "TE_result_matrix_ex02.txt")
