@@ -139,12 +139,12 @@ TE_result_matrix.txt
 
 #### Usage
 ```angular2html
-python stats/make_grn.py fp_rm [result matrix path] --fp_nn [node name file path] --fp_tf [tf file path]
+python stats/make_grn.py --fp_rm [result matrix path] --fp_nn [node name file path] --fp_tf [tf file path]
 ```
 
 #### Example
 ```angular2html
-python stats/make_grn.py fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_node_name.npy --fp_tf mouse_tf.txt
+python stats/make_grn.py --fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_node_name.npy --fp_tf mouse_tf.txt
 ```
 
 #### Output
