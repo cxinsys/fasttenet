@@ -1,4 +1,4 @@
-<img src="assets/logo_final.png" alt="Drawing" width="395px"/>
+<img src="assets/logo.png" alt="Drawing" width="395px"/>
 
 ## Indroduction
 - FastTENET is a library that supports multi-gpu acceleration of the [TENET](https://github.com/neocaleb/TENET) algorithm.
