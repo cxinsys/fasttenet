@@ -39,7 +39,7 @@ gene_name = np.load(fpath_nn)
 pairs = permutations(range(len(gene_name)), 2)
 pairs = np.asarray(tuple(pairs))
 
-if args.fp_tf!=None:
+if args.fp_tf!='None':
     # Source pick start
     tf2ind = {}
     ind2tf = {}

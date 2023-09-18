@@ -5,7 +5,7 @@ import numpy as np
 
 from fasttenet.array import get_array_module
 
-class TE(object):
+class TransferEntropy(object):
     def __init__(self,
                  device=None,
                  batch_size=None,
@@ -139,13 +139,15 @@ class TE(object):
 
             uvals_xt1_xt_yt, cnts_xt1_xt_yt = self.am.unique(pair_vals, return_counts=True, axis=0)
 
+            uvals_xt1_xt, cnts_xt1_xt = self.am.unique(pair_vals[:, :-1], return_counts=True, axis=0)
+            uvals_xt_yt, cnts_xt_yt = self.am.unique(self.am.take(pair_vals, np.array([0, 2, 3]), axis=1),
+                                                     return_counts=True, axis=0)
+            uvals_xt, cnts_xt = self.am.unique(self.am.take(pair_vals, np.array([0, 2]), axis=1), return_counts=True,
+                                               axis=0)
+
             subuvals_xt1_xt, n_subuvals_xt1_xt = self.am.unique(uvals_xt1_xt_yt[:, :-1], return_counts=True, axis=0)
             subuvals_xt_yt, n_subuvals_xt_yt = self.am.unique(self.am.take(uvals_xt1_xt_yt, np.array([0, 2, 3]), axis=1), return_counts=True, axis=0)
             subuvals_xt, n_subuvals_xt = self.am.unique(self.am.take(uvals_xt1_xt_yt, np.array([0, 2]), axis=1), return_counts=True, axis=0)
-
-            uvals_xt1_xt, cnts_xt1_xt = self.am.unique(pair_vals[:, :-1], return_counts=True, axis=0)
-            uvals_xt_yt, cnts_xt_yt = self.am.unique(self.am.take(pair_vals, np.array([0, 2, 3]), axis=1), return_counts=True, axis=0)
-            uvals_xt, cnts_xt = self.am.unique(self.am.take(pair_vals, np.array([0, 2]), axis=1), return_counts=True, axis=0)
 
             cnts_xt1_xt = self.am.repeat(cnts_xt1_xt, n_subuvals_xt1_xt)
 

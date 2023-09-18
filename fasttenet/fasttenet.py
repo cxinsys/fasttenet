@@ -8,7 +8,7 @@ import numpy as np
 from scipy.signal import savgol_filter
 
 from fasttenet.data import load_exp_data, load_time_data
-from fasttenet.tenet import TE
+from fasttenet.tenet import TransferEntropy
 from fasttenet.utils import get_gpu_list
 
 class FastTENET(object):
@@ -227,7 +227,7 @@ class FastTENET(object):
 
             device_name = device + ":" + str(device_ids[i])
             # print("tenet device: {}".format(device_name))
-            te = TE(device=device_name)
+            te = TransferEntropy(device=device_name)
 
             _process = Process(target=te.solve, args=(batch_size,
                                                               pairs[i_beg:i_end],

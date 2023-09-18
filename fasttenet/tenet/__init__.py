@@ -1,1 +1,1 @@
-from fasttenet.tenet.te import TE
+from fasttenet.tenet.transferentropy import TransferEntropy
