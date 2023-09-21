@@ -32,7 +32,7 @@ FastTENET requires following backend-specific dependencies to be installed:
 
 Install Cupy from Conda-Forge with cudatoolkit supported by your driver
 ```angular2html
-conda install -c conda-forge cupy cudatoolkit=xx.x (check your CUDA version)
+conda install -c conda-forge cupy cuda-version=xx.x (check your CUDA version)
 ```
 <br>
 

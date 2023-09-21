@@ -8,5 +8,5 @@ setup(name='fasttenet',
       author_email='daewon4you@gmail.com',
       license='BSD-3-Clause',
       packages=find_packages(),
-      install_requires=['numpy', 'statsmodels'],
+      install_requires=['numpy', 'statsmodels', 'networkx', 'tqdm', 'matplotlib'],
       zip_safe=False,)
