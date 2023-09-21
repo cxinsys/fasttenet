@@ -38,7 +38,7 @@ conda install -c conda-forge cupy cuda-version=xx.x (check your CUDA version)
 
 - JAX: [Installing JAX refer to the installation guide in the project README](https://github.com/google/jax#installation)
 
-**You must first install [CUDA](https://developer.nvidia.com/cuda-downloads) and [CuDNN](https://developer.nvidia.com/cudnn) before install JAX**
+**You must first install [CUDA](https://developer.nvidia.com/cuda-downloads) and [CuDNN](https://developer.nvidia.com/cudnn) before installing JAX**
 
 After install CUDA and CuDNN you can specify a particular CUDA and CuDNN version for jax explicitly
 ```angular2html
