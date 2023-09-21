@@ -121,15 +121,15 @@ class FastTENET(object):
 
         pairs = np.asarray(tuple(pairs), dtype=np.int32)
 
-        self._result_matrix = self._mate.run(device=device,
-                                       device_ids=device_ids,
-                                       batch_size=batch_size,
-                                       arr=arr,
-                                       pairs=pairs,
-                                       kp=kp,
-                                       percentile=percentile,
-                                       win_length=win_length,
-                                       polyorder=polyorder)
+        self._result_matrix = self._mate.run(arr=arr,
+                                             pairs=pairs,
+                                             device=device,
+                                             device_ids=device_ids,
+                                             batch_size=batch_size,
+                                             kp=kp,
+                                             percentile=percentile,
+                                             win_length=win_length,
+                                             polyorder=polyorder)
 
         if self._result_matrix is not None:
             self.save_result_matrix(self._spath_result_matrix)

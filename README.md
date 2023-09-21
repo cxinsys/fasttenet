@@ -53,6 +53,10 @@ Use 'XLA_PYTHON_CLIENT_PREALLOCATE=false' to disables the preallocation behavior
 (https://jax.readthedocs.io/en/latest/gpu_memory_allocation.html)
 
 ### Install from GitHub repository
+
+
+**You must install [MATE](https://github.com/cxinsys/mate) before installing FastTENET**
+
 First, clone the recent version of this repository.
 
 ```
@@ -64,7 +68,7 @@ Now, we need to install FastTENET as a module.
 
 ```
 cd fasttenet
-python setup.py install
+pip install -e .
 ```
 
 ## Tutorial
