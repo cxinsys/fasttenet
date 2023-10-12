@@ -52,10 +52,7 @@ class FastTENET(object):
         self._mate = mate.MATE(device=device,
                                device_ids=device_ids,
                                batch_size=batch_size,
-                               kp=kp,
-                               percentile=percentile,
-                               win_length=win_length,
-                               polyorder=polyorder)
+                               )
 
     def save_result_matrix(self, spath_result_matrix=None):
         if spath_result_matrix is None:
@@ -91,6 +88,8 @@ class FastTENET(object):
             percentile=0,
             win_length=10,
             polyorder=3,
+            kw_smooth=True,
+            data_smooth=True,
             ):
 
         if not device:
@@ -128,8 +127,12 @@ class FastTENET(object):
                                              batch_size=batch_size,
                                              kp=kp,
                                              percentile=percentile,
-                                             win_length=win_length,
-                                             polyorder=polyorder)
+                                             smooth_func=savgol_filter,
+                                             smooth_param={'window_length': win_length,
+                                                           'polyorder': polyorder},
+                                             kw_smooth=kw_smooth,
+                                             data_smooth=data_smooth,
+                                             )
 
         if self._result_matrix is not None:
             self.save_result_matrix(self._spath_result_matrix)
