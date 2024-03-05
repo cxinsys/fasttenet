@@ -1,0 +1,1 @@
+python tutorial_notf.py --fp_exp synthetic_big.csv --fp_trj pseudo_time_synth.txt --fp_br cell_select_synth.txt --sp_rm TE_result_matrix.txt
