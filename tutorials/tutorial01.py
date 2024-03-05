@@ -39,8 +39,8 @@ if __name__ == "__main__":
                            make_binary=True) # Optional, default: False
 
     result_matrix = worker.run(device='gpu',
-                               device_ids=7,
-                               batch_size=2 ** 16,  # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
+                               device_ids=8,
+                               batch_size=2 ** 15,  # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
                                num_kernels=1,
                                method='pushing',
                                kp=0.5,
