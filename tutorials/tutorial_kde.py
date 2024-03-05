@@ -44,11 +44,6 @@ if __name__ == "__main__":
                                num_kernels=1,
                                method='pushing',
                                kp=0.5,
-                               percentile=0,
-                               win_length=10,
-                               polyorder=3,
-                               # kw_smooth=True,
-                               # data_smooth=True
                                )
 
     # print(result_matrix)
