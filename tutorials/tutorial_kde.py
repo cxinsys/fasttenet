@@ -23,7 +23,7 @@ if __name__ == "__main__":
     dpath_exp_data = osp.join(droot, args.fp_exp)
     dpath_trj_data = osp.join(droot,args.fp_trj)
     dpath_branch_data = osp.join(droot,args.fp_br)
-    # dpath_tf_data = osp.join(droot,args.fp_tf)
+    dpath_tf_data = osp.join(droot,args.fp_tf)
 
     spath_result_matrix = osp.join(droot, args.sp_rm)
 
@@ -34,11 +34,21 @@ if __name__ == "__main__":
     worker = fte.FastTENET(dpath_exp_data=dpath_exp_data, # Required
                            dpath_trj_data=dpath_trj_data, # Required
                            dpath_branch_data=dpath_branch_data, # Required
-                           # dpath_tf_data=dpath_tf_data, # Optional
+                           dpath_tf_data=dpath_tf_data, # Optional
                            spath_result_matrix=spath_result_matrix, # Optional
                            make_binary=True) # Optional, default: False
 
-    result_matrix = worker.run(device='cpu', device_ids=[0], batch_size=2 ** 12, kp=0.5, percentile=0, win_length=10,
-                               polyorder=3, kw_smooth=True, data_smooth=True)
+    result_matrix = worker.run(device='gpu',
+                               device_ids=7,
+                               batch_size=2 ** 16, # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
+                               num_kernels=1,
+                               method='pushing',
+                               kp=0.5,
+                               percentile=0,
+                               win_length=10,
+                               polyorder=3,
+                               # kw_smooth=True,
+                               # data_smooth=True
+                               )
 
-    print(result_matrix)
+    # print(result_matrix)
