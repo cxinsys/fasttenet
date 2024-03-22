@@ -9,12 +9,13 @@ from scipy.signal import savgol_filter
 import mate
 
 from fasttenet.data import load_exp_data, load_time_data
-from fasttenet.utils import get_gpu_list
+from fasttenet.utils import get_device_list
 
 class FastTENET(object):
     def __init__(self,
                  device=None,
                  device_ids=None,
+                 procs_per_device=None,
                  dpath_exp_data=None,
                  dpath_trj_data=None,
                  dpath_branch_data=None,
@@ -83,6 +84,7 @@ class FastTENET(object):
     def run(self,
             device=None,
             device_ids=None,
+            procs_per_device=None,
             batch_size=None,
             num_kernels=3,
             method='interpolation',
@@ -101,7 +103,10 @@ class FastTENET(object):
             if 'cpu' in device:
                 device_ids = [0]
             else:
-                device_ids = get_gpu_list()
+                device_ids = get_device_list()
+
+        if not procs_per_device:
+            procs_per_device = 1
 
         if not batch_size:
             raise ValueError("batch size should be refined")
@@ -126,6 +131,7 @@ class FastTENET(object):
                                              pairs=pairs,
                                              device=device,
                                              device_ids=device_ids,
+                                             procs_per_device=procs_per_device,
                                              batch_size=batch_size,
                                              kp=kp,
                                              num_kernels=num_kernels,
