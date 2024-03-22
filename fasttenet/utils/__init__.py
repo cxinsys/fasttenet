@@ -1,1 +1,1 @@
-from fasttenet.utils.utils import get_gpu_list
+from fasttenet.utils.utils import get_device_list
