@@ -50,10 +50,7 @@ class FastTENET(object):
         self._refined_exp_data = None
         self._result_matrix = None
 
-        self._mate = mate.MATE(device=device,
-                               device_ids=device_ids,
-                               batch_size=batch_size,
-                               )
+        self._mate = mate.MATE()
 
     def save_result_matrix(self, spath_result_matrix=None):
         if spath_result_matrix is None:
