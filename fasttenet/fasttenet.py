@@ -94,6 +94,7 @@ class FastTENET(object):
             polyorder=3,
             kw_smooth=True,
             data_smooth=True,
+            dt=1
             ):
 
         if not device:
@@ -142,6 +143,7 @@ class FastTENET(object):
                                                            'polyorder': polyorder},
                                              kw_smooth=kw_smooth,
                                              data_smooth=data_smooth,
+                                             dt=dt
                                              )
 
         if self._result_matrix is not None:
