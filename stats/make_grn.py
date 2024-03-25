@@ -15,30 +15,22 @@ parser = argparse.ArgumentParser(description='dpath parser')
 parser.add_argument('--fp_rm', type=str, dest='fp_rm', required=True)
 parser.add_argument('--fp_nn', type=str, dest='fp_nn', required=True)
 parser.add_argument('--fp_tf', type=str, dest='fp_tf', required=False, default='None')
-parser.add_argument('--init_fdr', type=float, dest='fdr', required=False, default=0.00001)
+parser.add_argument('--fdr', type=float, dest='fdr', required=False, default=0.01)
 parser.add_argument('--t_degrees', type=int, dest='dgs', required=False, default=0)
 
 args = parser.parse_args()
 
 droot = osp.dirname(args.fp_rm)
 
-kw = 0.5
 fpath_rm = osp.abspath(args.fp_rm)
 fpath_nn = osp.abspath(args.fp_nn)
 fdr = args.fdr
 dgs = args.dgs
 
-# fpath_binary = osp.join(droot, "TE_result_matrix_ex02.npy")
-# fpath_ed = osp.join(droot, "TE_result_matrix_ex02.txt")
-
 
 result_matrix = np.loadtxt(fpath_rm, delimiter='\t', dtype=np.float32)
-# result_matrix = np.loadtxt(fpath_rm, delimiter='\t', dtype=str)
-# result_matrix = result_matrix[1:, 1:].astype(np.float32)
 
 print(result_matrix.shape)
-
-# ifile = open(fpath_ed)
 
 gene_name = np.load(fpath_nn)
 
@@ -90,6 +82,8 @@ te_fdr = statsmodels.sandbox.stats.multicomp.multipletests(te_pval, alpha=0.05, 
 # fdrCutoff=float(sys.argv[1])
 
 out_cnt = dgs
+if out_cnt != 0:
+    fdr = 0.0001
 
 print("Total number of degrees to target ", out_cnt)
 
