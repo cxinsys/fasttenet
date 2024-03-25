@@ -102,35 +102,51 @@ worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
 
 #### parameters
 - **device**: optional, default: 'cpu'
-- **device_ids**: optional, default: [0] (cpu), [list of whole gpu devices] (gpu) 
+- **device_ids**: list or number of devcies to use, optional, default: [0] (cpu), [list of whole gpu devices] (gpu) 
 - **batch_size**: Required
 - **kp**: kernel percentile, optional, default: 0.5
-- **percentile**: data crop percentile, optional, default: 0
-- **win_length**: smoothe func window length parameter, optional, default: 10
-- **polyorder**: smoothe func polyorder parameter, optional, default: 3
+- **method**: approximations for calculating TE, optional, 'pushing' method is recommended to achieve results similar to TENET. 
+
 
 ```angular2html
 result_matrix = worker.run(device='gpu',
-                                device_ids=[0, 1, 2, 3, 4, 5, 6, 7],
+                                device_ids=8,
                                 batch_size=2 ** 16,
                                 kp=0.5,
-                                percentile=0,
-                                win_length=10,
-                                polyorder=3)
+                                method='pushing',
+                                )
 ```
 
-### Run FastTENET with tutorial01.py
+### Run FastTENET with tutorial_notf.py
 
-- **Before Run tutorial01.py batch_size parameter must be modified to fit your gpu memory size**
+- **Before Run tutorial_notf.py batch_size parameter must be modified to fit your gpu memory size**
 
 #### Usage
 ```angular2html
-python tutorials/tutorial01.py --fp_exp [expression file path] --fp_trj [trajectory file path] --fp_br [cell select file path] --fp_tf [tf file path] --sp_rm [save file path]
+python tutorials/tutorial_notf.py --fp_exp [expression file path] --fp_trj [trajectory file path] --fp_br [cell select file path] --sp_rm [save file path]
 ```
 
 #### Example
 ```angular2html
-python tutorials/tutorial01.py --fp_exp expression_dataTuck.csv --fp_trj pseudotimeTuck.txt --fp_br cell_selectTuck.txt --fp_tf mouse_tfs.txt --sp_rm TE_result_matrix.txt
+python tutorials/tutorial_notf.py --fp_exp expression_dataTuck.csv --fp_trj pseudotimeTuck.txt --fp_br cell_selectTuck.txt --sp_rm TE_result_matrix.txt
+```
+
+#### Output
+```angular2html
+TE_result_matrix.txt
+```
+
+### Run FastTENET with tutorial_tf.py
+- **Before Run tutorial_tf.py batch_size parameter must be modified to fit your gpu memory size**
+
+#### Usage
+```angular2html
+python tutorials/tutorial_tf.py --fp_exp [expression file path] --fp_trj [trajectory file path] --fp_br [cell select file path] --fp_tf [tf file path] --sp_rm [save file path]
+```
+
+#### Example
+```angular2html
+python tutorials/tutorial_tf.py --fp_exp expression_dataTuck.csv --fp_trj pseudotimeTuck.txt --fp_br cell_selectTuck.txt --fp_tf mouse_tfs.txt --sp_rm TE_result_matrix.txt
 ```
 
 #### Output
@@ -139,17 +155,23 @@ TE_result_matrix.txt
 ```
 
 ### Run make_grn.py
-
-- node_name binary file, result_matrix file are required, tf file is optional
+#### parameters
+- **fp_rm**: result matrix, required
+- **fp_nn**: node name file, required
+- **fp_tf**: tf list file, optional
+- **fdr**: specifying fdr, optional, default: 0.01
+- **t_degrees**: specifying number of outdegrees, optional, generate final GRNs by incrementally increasing the fdr \
+value until the total number of outdegrees is greater than the parameter value.
 
 #### Usage
+When specifying an fdr
 ```angular2html
-python stats/make_grn.py --fp_rm [result matrix path] --fp_nn [node name file path] --fp_tf [tf file path]
+python stats/make_grn.py --fp_rm [result matrix path] --fp_nn [node name file path] --fp_tf [tf file path] --fdr [fdr]
 ```
 
 #### Example
 ```angular2html
-python stats/make_grn.py --fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_node_name.npy --fp_tf mouse_tf.txt
+python stats/make_grn.py --fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_node_name.npy --fp_tf mouse_tf.txt --fdr 0.01
 ```
 
 #### Output
@@ -157,6 +179,24 @@ python stats/make_grn.py --fp_rm TE_result_matrix.txt --fp_nn expression_dataTuc
 te_result_grn.fdr0.01.sif, te_result_grn.fdr0.01.sif.outdegrees.txt
 ```
 
+#### Usage
+When specifying an t_degrees
+```angular2html
+python stats/make_grn.py --fp_rm [result matrix path] --fp_nn [node name file path] --fp_tf [tf file path] --t_degrees [number of outdegrees]
+```
+
+#### Example
+```angular2html
+python stats/make_grn.py --fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_node_name.npy --fp_tf mouse_tf.txt --t_degrees 1000
+```
+
+#### Output
+If the t_degrees parameter was used, the filename will include the fdr value when the outdegrees condition is met. 
+```angular2html
+te_result_grn.fdr0.06.sif, te_result_grn.fdr0.06.sif.outdegrees.txt
+```
+
 ## TODO
 
 - [x] add 'jax' backend module
+- [x] add 'lightning' backend module
