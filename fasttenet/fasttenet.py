@@ -134,12 +134,12 @@ class FastTENET(object):
                                              kp=kp,
                                              num_kernels=num_kernels,
                                              method=method,
-                                             percentile=percentile,
-                                             smooth_func=savgol_filter,
-                                             smooth_param={'window_length': win_length,
-                                                           'polyorder': polyorder},
-                                             kw_smooth=kw_smooth,
-                                             data_smooth=data_smooth,
+                                             # percentile=percentile,
+                                             # smooth_func=savgol_filter,
+                                             # smooth_param={'window_length': win_length,
+                                             #               'polyorder': polyorder},
+                                             # kw_smooth=kw_smooth,
+                                             # data_smooth=data_smooth,
                                              dt=dt
                                              )
 
