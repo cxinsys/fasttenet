@@ -103,6 +103,7 @@ worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
 #### parameters
 - **device**: optional, default: 'cpu'
 - **device_ids**: list or number of devcies to use, optional, default: [0] (cpu), [list of whole gpu devices] (gpu) 
+- **procs_per_device**: The number of processes to create per device when using non 'cpu' devices, optional, default: 1
 - **batch_size**: Required
 - **kp**: kernel percentile, optional, default: 0.5
 - **method**: approximations for calculating TE, optional, 'pushing' method is recommended to achieve results similar to TENET. 
@@ -111,6 +112,7 @@ worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
 ```angular2html
 result_matrix = worker.run(device='gpu',
                                 device_ids=8,
+                                procs_per_device=4,
                                 batch_size=2 ** 16,
                                 kp=0.5,
                                 method='pushing',
