@@ -13,19 +13,21 @@ if __name__ == "__main__":
     parser.add_argument('--fp_trj', type=str, dest='fp_trj', required=True)
     parser.add_argument('--fp_br', type=str, dest='fp_br', required=True)
     parser.add_argument('--fp_tf', type=str, dest='fp_tf', required=False, default=None)
+    parser.add_argument('--batch_size', type=int, dest='batch_size', required=False, default=2 ** 15)
     parser.add_argument('--sp_rm', type=str, dest='sp_rm', required=False)
 
     args = parser.parse_args()
 
 
     droot = args.droot
-    # dpath_exp_data = osp.abspath(args.fp_exp)
     dpath_exp_data = osp.join(droot, args.fp_exp)
     dpath_trj_data = osp.join(droot,args.fp_trj)
     dpath_branch_data = osp.join(droot,args.fp_br)
     dpath_tf_data = osp.join(droot,args.fp_tf)
 
     spath_result_matrix = osp.join(droot, args.sp_rm)
+
+    batch_size = args.batch_size
 
     # Create worker
     # expression data, trajectory data, branch data path is required
@@ -41,7 +43,7 @@ if __name__ == "__main__":
     result_matrix = worker.run(device='gpu',
                                device_ids=8,
                                procs_per_device=4,
-                               batch_size=2 ** 15,  # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
+                               batch_size=batch_size,  # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
                                num_kernels=1,
                                method='pushing',
                                kp=0.5,
