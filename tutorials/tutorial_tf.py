@@ -40,6 +40,7 @@ if __name__ == "__main__":
 
     result_matrix = worker.run(device='gpu',
                                device_ids=8,
+                               procs_per_device=4,
                                batch_size=2 ** 15,  # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
                                num_kernels=1,
                                method='pushing',
