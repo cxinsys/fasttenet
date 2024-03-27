@@ -121,7 +121,7 @@ result_matrix = worker.run(device='gpu',
 
 ### Run FastTENET with YAML config file
 
-- **Before Run tutorial_notf.py batch_size parameter must be modified to fit your gpu memory size**
+- **Before run tutorial_config.py, batch_size parameter must be modified to fit your gpu memory size**
 - **You can set parameters and run FastTENET via a YAML file**
 - **The config file must have values set for all required parameters**
 #### Usage
@@ -141,7 +141,7 @@ TE_result_matrix.txt
 
 ### Run FastTENET with tutorial_notf.py
 
-- **Before Run tutorial_notf.py batch_size parameter must be modified to fit your gpu memory size**
+- **Before run tutorial_notf.py, batch_size parameter must be modified to fit your gpu memory size**
 
 #### Usage
 ```angular2html
@@ -159,7 +159,7 @@ TE_result_matrix.txt
 ```
 
 ### Run FastTENET with tutorial_tf.py
-- **Before Run tutorial_tf.py batch_size parameter must be modified to fit your gpu memory size**
+- **Before run tutorial_tf.py, batch_size parameter must be modified to fit your gpu memory size**
 
 #### Usage
 ```angular2html
