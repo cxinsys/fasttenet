@@ -1,0 +1,20 @@
+---
+
+INIT:
+  DROOT: "./"
+  FPATH_EXP: "expression_dataTuck_sub.csv"
+  FPATH_TRJ: "pseudotimeTuck.txt"
+  FPATH_BRANCH: "cell_selectTuck.txt"
+  FPATH_TF: "mouse_tfs.txt"
+  SPATH_RESULT: "TE_result_matrix.txt"
+  MAKE_BINARY: True
+
+DEVICE: "gpu"
+DEVICE_IDS: 8
+PROCS_PER_DEVICE: 4
+BATCH_SIZE: 2**16
+
+METHOD: "pushing"
+NUM_KERNELS: 1
+KP: 0.5
+DT: 1
