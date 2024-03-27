@@ -131,7 +131,7 @@ python tutorial_config.py --config [config file path]
 
 #### Example
 ```angular2html
-python tutorial_config.py --config ./config_tuck_sub.yml
+python tutorial_config.py --config ../config_tuck_sub.yml
 ```
 
 #### Output
