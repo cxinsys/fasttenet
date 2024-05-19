@@ -13,6 +13,7 @@ if __name__ == "__main__":
     parser.add_argument('--fp_trj', type=str, dest='fp_trj', required=True)
     parser.add_argument('--fp_br', type=str, dest='fp_br', required=True)
     parser.add_argument('--fp_tf', type=str, dest='fp_tf', required=False, default=None)
+    parser.add_argument('--device', type=str, dest='device', required=False, default='gpu')
     parser.add_argument('--batch_size', type=int, dest='batch_size', required=False, default=2 ** 15)
     parser.add_argument('--sp_rm', type=str, dest='sp_rm', required=False)
 
@@ -27,6 +28,7 @@ if __name__ == "__main__":
 
     spath_result_matrix = osp.join(droot, args.sp_rm)
 
+    device = args.device
     batch_size = args.batch_size
 
     # Create worker
@@ -40,7 +42,7 @@ if __name__ == "__main__":
                            spath_result_matrix=spath_result_matrix, # Optional
                            make_binary=True) # Optional, default: False
 
-    result_matrix = worker.run(device='gpu',
+    result_matrix = worker.run(device=device,
                                device_ids=8,
                                procs_per_device=4,
                                batch_size=batch_size,  # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
@@ -49,4 +51,4 @@ if __name__ == "__main__":
                                kp=0.5,
                                )
 
-    print(result_matrix)
+    # print(result_matrix)

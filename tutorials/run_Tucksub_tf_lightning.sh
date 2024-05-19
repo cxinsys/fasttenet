@@ -1,0 +1,1 @@
+python tutorial_tf.py --fp_exp expression_dataTuck_sub.csv --fp_trj pseudotimeTuck.txt --fp_br cell_selectTuck.txt --fp_tf mouse_tfs.txt --device lightning --sp_rm TE_result_matrix.txt

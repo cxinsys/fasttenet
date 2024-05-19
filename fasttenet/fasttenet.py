@@ -63,7 +63,7 @@ class FastTENET(object):
 
             self._spath_result_matrix = spath_result_matrix
 
-        self._mate = mate.MATE()
+        self._mate = None
 
     def save_result_matrix(self, spath_result_matrix=None):
         if spath_result_matrix is None:
@@ -161,23 +161,31 @@ class FastTENET(object):
 
         pairs = np.asarray(tuple(pairs), dtype=np.int32)
 
-        self._result_matrix = self._mate.run(arr=arr,
-                                             pairs=pairs,
-                                             device=device,
-                                             device_ids=device_ids,
-                                             procs_per_device=procs_per_device,
-                                             batch_size=batch_size,
-                                             kp=kp,
-                                             num_kernels=num_kernels,
-                                             method=method,
-                                             # percentile=percentile,
-                                             # smooth_func=savgol_filter,
-                                             # smooth_param={'window_length': win_length,
-                                             #               'polyorder': polyorder},
-                                             # kw_smooth=kw_smooth,
-                                             # data_smooth=data_smooth,
-                                             dt=dt
-                                             )
+        if device == 'lightning':
+            self._mate = mate.MATELightning(arr=arr,
+                                            pairs=pairs,
+                                            kp=kp,
+                                            num_kernels=num_kernels,
+                                            method=method,
+                                            dt=dt
+                                            )
+            self._result_matrix = self._mate.run(device='gpu',
+                                                 devices=device_ids,
+                                                 batch_size=batch_size
+                                                 )
+        else:
+            self._mate = mate.MATE()
+            self._result_matrix = self._mate.run(arr=arr,
+                                                 pairs=pairs,
+                                                 device=device,
+                                                 device_ids=device_ids,
+                                                 procs_per_device=procs_per_device,
+                                                 batch_size=batch_size,
+                                                 kp=kp,
+                                                 num_kernels=num_kernels,
+                                                 method=method,
+                                                 dt=dt
+                                                 )
 
         if self._result_matrix is not None:
             self.save_result_matrix(self._spath_result_matrix)
