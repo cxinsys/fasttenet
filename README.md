@@ -2,7 +2,7 @@
 
 
 ## Indroduction
-- FastTENET is a library that supports multi-gpu acceleration of the [TENET](https://github.com/neocaleb/TENET) algorithm.
+- FastTENET is an accelerated [TENET](https://github.com/neocaleb/TENET) algorithm based on manycore computing.
 
 ## Installation
 - :snake: [Anaconda](https://www.anaconda.com) is recommended to use and develop FastTENET.
