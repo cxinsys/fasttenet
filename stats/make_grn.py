@@ -17,6 +17,7 @@ parser.add_argument('--fp_nn', type=str, dest='fp_nn', required=True)
 parser.add_argument('--fp_tf', type=str, dest='fp_tf', required=False, default='None')
 parser.add_argument('--fdr', type=float, dest='fdr', required=False, default=0.01)
 parser.add_argument('--t_degrees', type=int, dest='dgs', required=False, default=0)
+parser.add_argument('--trim_threshold', type=float, dest='trim_threshold', required=False, default=0)
 
 args = parser.parse_args()
 
@@ -27,10 +28,11 @@ fpath_nn = osp.abspath(args.fp_nn)
 fdr = args.fdr
 dgs = args.dgs
 
+trim_threshold = args.trim_threshold
 
 result_matrix = np.loadtxt(fpath_rm, delimiter='\t', dtype=np.float32)
 
-print(result_matrix.shape)
+print("Number of genes: ", len(result_matrix))
 
 gene_name = np.load(fpath_nn)
 
@@ -63,7 +65,7 @@ if args.fp_tf!='None':
     pairs = np.array(pairs_filtered)
 
 
-print('pairs shape: ', pairs.shape)
+print('Number of pairs: ', len(pairs))
 # Source pick end
 
 # Indexing to get the 1D arrays
@@ -76,16 +78,11 @@ te_zscore = (te - np.mean(te)) / np.std(te)
 te_pval = 1 - scipy.stats.norm.cdf(te_zscore)
 te_fdr = statsmodels.sandbox.stats.multicomp.multipletests(te_pval, alpha=0.05, method='fdr_bh')
 
-
-
-
 # fdrCutoff=float(sys.argv[1])
 
 out_cnt = dgs
 if out_cnt != 0:
     fdr = 0.0001
-
-print("Total number of degrees to target ", out_cnt)
 
 while (True):
     inds_cutoff = te_fdr[1] < fdr  # Get the indices of significant pairs
@@ -119,29 +116,58 @@ while (True):
     else:
         fdr += 0.01
 
-# fdr_cutoff = fdr
+# trimming
+TF, TFtarget, TFtargetTE, TFtargetIndirect = [], [], [], []
+for row in te_grn:
+    if row[0] not in TF:
+        TF.append(row[0])
+        TFtarget.append([row[2]])
+        TFtargetTE.append([float(row[1])])
+        TFtargetIndirect.append([0])
+    else:
+        tmp_ind = TF.index(row[0])
+        TFtarget[tmp_ind].append(row[2])
+        TFtargetTE[tmp_ind].append(float(row[1]))
+        TFtargetIndirect[tmp_ind].append(0)
 
-# inds_cutoff = te_fdr[1] < fdr_cutoff  # Get the indices of significant pairs
+for i in range(len(TF)):
+    for j in range(len(TFtarget[i])):
+        for k in range(len(TFtarget[i])):
+            if j != k and TFtarget[i][j] in TF:
+                tmp_inds = TF.index(TFtarget[i][j])
+                if TFtarget[i][k] in TFtarget[tmp_inds]:
+                    if TFtargetTE[i][k] < min(TFtargetTE[i][j], TFtargetTE[tmp_inds][TFtarget[tmp_inds].index(TFtarget[i][k])]) + trim_threshold:
+                        TFtargetIndirect[i][k] = 1
 
-# source_cutoff = source[inds_cutoff]
-# target_cutoff = target[inds_cutoff]
-# te_cutoff = te[inds_cutoff]
+trimmed_te_grn = []
+for i in range(len(TF)):
+    for j in range(len(TFtarget[i])):
+        if TFtargetIndirect[i][j] == 0:
+            trimmed_te_grn.append([TF[i], str(TFtargetTE[i][j]), TFtarget[i][j]])
 
-# te_grn = np.stack((source_cutoff, te_cutoff, target_cutoff), axis=1)
-# print(te_grn.shape)
+trimmed_te_grn = np.array(trimmed_te_grn, dtype=str)
 
-# cnts_outdegree = Counter(te_grn[:, 0])
-# cnts_outdegree = Counter(te_grn[:, 2])
-# dg = nx.from_edgelist(te_grn[:, [0, 2]], create_using=nx.DiGraph)
-# out_degrees = sorted(dg.out_degree, key=lambda x: x[1], reverse=True)
+# outdegree
+dg = nx.from_edgelist(te_grn[:, [0, 2]], create_using=nx.DiGraph)
+out_degrees = sorted(dg.out_degree, key=lambda x: x[1], reverse=True)
+
+# trimmed_outdegree
+dg = nx.from_edgelist(trimmed_te_grn[:, [0, 2]], create_using=nx.DiGraph)
+trim_out_degrees = sorted(dg.out_degree, key=lambda x: x[1], reverse=True)
 
 rm_base = osp.basename(fpath_rm)
 
 fpath_save = osp.join(droot, f"{rm_base[:-4]}.byGRN.fdr" + str(fdr) + ".sif")
-# fpath_save = osp.join(droot, "te_result_grn_ex02.fdr"+str(fdr_cutoff)+".sif")
 
 np.savetxt(fpath_save, te_grn, delimiter='\t', fmt="%s")
-print('save te result grn in ', fpath_save)
+print('save grn in ', fpath_save)
 
-# np.savetxt(fpath_save + ".outdegrees.txt", out_degrees, fmt="%s")
-# print('save te result outdegrees in ', fpath_save)
+fpath_timmed = fpath_save[:-4] + '.trimIndirect' + str(trim_threshold) + '.sif'
+np.savetxt(fpath_timmed, trimmed_te_grn, delimiter='\t', fmt="%s")
+print('save trimmed grn in ', fpath_timmed)
+
+np.savetxt(fpath_save + ".outdegrees.txt", out_degrees, fmt="%s")
+print('save grn outdegrees in ', fpath_save + ".outdegrees.txt")
+
+np.savetxt(fpath_timmed + ".outdegrees.txt", trim_out_degrees, fmt="%s")
+print('save trimmed grn outdegrees in ', fpath_timmed + ".outdegrees.txt")

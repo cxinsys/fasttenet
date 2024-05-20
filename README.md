@@ -184,6 +184,7 @@ TE_result_matrix.txt
 - **fdr**: specifying fdr, optional, default: 0.01
 - **t_degrees**: specifying number of outdegrees, optional, generate final GRNs by incrementally increasing the fdr \
 value until the total number of outdegrees is greater than the parameter value.
+- **trim_threshold**: trimming threshold, optional, default: 0
 
 #### Usage
 When specifying an fdr
@@ -198,11 +199,12 @@ python make_grn.py --fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_node
 
 #### Output
 ```angular2html
-te_result_grn.fdr0.01.sif, te_result_grn.fdr0.01.sif.outdegrees.txt
+TE_result_matrix.byGRN.fdr0.01.sif, TE_result_matrix.byGRN.fdr0.01.sif.outdegrees.txt
+TE_result_matrix.byGRN.fdr0.01.trimIndirect0.sif, TE_result_matrix.byGRN.fdr0.01.trimIndirect0.sif.outdegrees.txt
 ```
 
 #### Usage
-When specifying an t_degrees
+When specifying the t_degrees
 ```angular2html
 python make_grn.py --fp_rm [result matrix path] --fp_nn [node name file path] --fp_tf [tf file path] --t_degrees [number of outdegrees]
 ```
@@ -213,9 +215,9 @@ python make_grn.py --fp_rm TE_result_matrix.txt --fp_nn expression_dataTuck_node
 ```
 
 #### Output
-If the t_degrees parameter was used, the filename will include the fdr value when the outdegrees condition is met. 
 ```angular2html
-te_result_grn.fdr0.06.sif, te_result_grn.fdr0.06.sif.outdegrees.txt
+TE_result_matrix.byGRN.fdr0.06.sif, TE_result_matrix.byGRN.fdr0.06.sif.outdegrees.txt
+TE_result_matrix.byGRN.fdr0.06.trimIndirect0.sif, TE_result_matrix.byGRN.fdr0.06.trimIndirect0.sif.outdegrees.txt
 ```
 
 ## TODO
