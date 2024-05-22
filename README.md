@@ -51,10 +51,8 @@ conda install -c conda-forge cupy cuda-version=xx.x (check your CUDA version)
 
 [//]: # ()
 [//]: # (After install CUDA and CuDNN you can specify a particular CUDA and CuDNN version for jax explicitly)
+Install JAX with CUDA > 12.x
 ```angular2html
-pip install --upgrade pip
-
-# Install JAX with CUDA > 12.x
 pip install -U "jax[cuda12]"
 ```
 
