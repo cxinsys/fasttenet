@@ -47,13 +47,14 @@ conda install -c conda-forge cupy cuda-version=xx.x (check your CUDA version)
 
 - JAX: [Installing JAX refer to the installation guide in the project README](https://github.com/google/jax#installation)
 
-**You must first install [CUDA](https://developer.nvidia.com/cuda-downloads) and [CuDNN](https://developer.nvidia.com/cudnn) before installing JAX**
+[//]: # (**You must first install [CUDA]&#40;https://developer.nvidia.com/cuda-downloads&#41; and [CuDNN]&#40;https://developer.nvidia.com/cudnn&#41; before installing JAX**)
 
-After install CUDA and CuDNN you can specify a particular CUDA and CuDNN version for jax explicitly
+[//]: # ()
+[//]: # (After install CUDA and CuDNN you can specify a particular CUDA and CuDNN version for jax explicitly)
 ```angular2html
 pip install --upgrade pip
 
-# Installs the wheel compatible with Cuda >= 11.x and cudnn >= 8.6
+# Install JAX with CUDA > 12.x
 pip install -U "jax[cuda12]"
 ```
 
