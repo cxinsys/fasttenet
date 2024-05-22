@@ -28,6 +28,15 @@ conda activate fasttenet
 FastTENET requires following backend-specific dependencies to be installed:
 
 
+
+- PyTorch: [Installing PyTorch](https://pytorch.org/get-started/locally/)
+
+PyTorch is default backend module of FastTENET. Also, it will be used if you set the device parameter to 'gpu' or 'cuda'.
+```angular2html
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+```
+<br>
+
 - CuPy: [Installing CuPy from Conda-Forge with cudatoolkit](https://docs.cupy.dev/en/stable/install.html#installing-cupy-from-conda-forge)
 
 Install Cupy from Conda-Forge with cudatoolkit supported by your driver
@@ -45,7 +54,7 @@ After install CUDA and CuDNN you can specify a particular CUDA and CuDNN version
 pip install --upgrade pip
 
 # Installs the wheel compatible with Cuda >= 11.x and cudnn >= 8.6
-pip install "jax[cuda11_cudnn86]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+pip install -U "jax[cuda12]"
 ```
 
 JAX preallocate 90% of the totla GPU memory when the first JAX operation is run \
