@@ -25,16 +25,35 @@ conda activate fasttenet
 ```
 <br>
 
-FastTENET requires following backend-specific dependencies to be installed:
+### Install from GitHub repository
 
 
+[//]: # (**You must install [MATE]&#40;https://github.com/cxinsys/mate&#41; before installing FastTENET**)
 
-- PyTorch: [Installing PyTorch](https://pytorch.org/get-started/locally/)
+First, clone the recent version of this repository.
 
-PyTorch is default backend module of FastTENET. Also, it will be used if you set the device parameter to 'gpu' or 'cuda'.
-```angular2html
-conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 ```
+git clone https://github.com/cxinsys/fasttenet.git
+```
+
+
+Now, we need to install FastTENET as a module.
+
+```
+cd fasttenet
+pip install -e .
+```
+
+
+- **Default backend framework of the FastTENET is PyTorch Lightning.**
+
+<br>
+
+### Install optional frameworks
+
+FastTENET supports several optional backend frameworks such as CuPy and JAX. \
+To use optional frameworks, you need to install the framework manually
+
 <br>
 
 - CuPy: [Installing CuPy from Conda-Forge with cudatoolkit](https://docs.cupy.dev/en/stable/install.html#installing-cupy-from-conda-forge)
@@ -60,24 +79,7 @@ JAX preallocate 90% of the totla GPU memory when the first JAX operation is run 
 Use 'XLA_PYTHON_CLIENT_PREALLOCATE=false' to disables the preallocation behavior\
 (https://jax.readthedocs.io/en/latest/gpu_memory_allocation.html)
 
-### Install from GitHub repository
 
-
-**You must install [MATE](https://github.com/cxinsys/mate) before installing FastTENET**
-
-First, clone the recent version of this repository.
-
-```
-git clone https://github.com/cxinsys/fasttenet.git
-```
-
-
-Now, we need to install FastTENET as a module.
-
-```
-cd fasttenet
-pip install -e .
-```
 
 ## Tutorial
 
@@ -153,12 +155,24 @@ TE_result_matrix.txt
 
 #### Usage
 ```angular2html
-python tutorial_notf.py --fp_exp [expression file path] --fp_trj [trajectory file path] --fp_br [cell select file path] --sp_rm [save file path]
+python tutorial_notf.py --fp_exp [expression file path] 
+                        --fp_trj [trajectory file path] 
+                        --fp_br [cell select file path] 
+                        --device [name of backend framework]
+                        --num_devices [number of devices]
+                        --batch_size [batch size]
+                        --sp_rm [save file path]
 ```
 
 #### Example
 ```angular2html
-python tutorial_notf.py --fp_exp expression_dataTuck.csv --fp_trj pseudotimeTuck.txt --fp_br cell_selectTuck.txt --sp_rm TE_result_matrix.txt
+python tutorial_notf.py --fp_exp expression_dataTuck.csv 
+                        --fp_trj pseudotimeTuck.txt 
+                        --fp_br cell_selectTuck.txt 
+                        --device lightning
+                        --num_devices 8
+                        --batch_size 32768
+                        --sp_rm TE_result_matrix.txt
 ```
 
 #### Output
@@ -171,12 +185,26 @@ TE_result_matrix.txt
 
 #### Usage
 ```angular2html
-python tutorial_tf.py --fp_exp [expression file path] --fp_trj [trajectory file path] --fp_br [cell select file path] --fp_tf [tf file path] --sp_rm [save file path]
+python tutorial_tf.py --fp_exp [expression file path] 
+                      --fp_trj [trajectory file path] 
+                      --fp_br [cell select file path] 
+                      --fp_tf [tf file path] 
+                      --device [name of backend framework]
+                      --num_devices [number of devices]
+                      --batch_size [batch size]
+                      --sp_rm [save file path]
 ```
 
 #### Example
 ```angular2html
-python tutorial_tf.py --fp_exp expression_dataTuck.csv --fp_trj pseudotimeTuck.txt --fp_br cell_selectTuck.txt --fp_tf mouse_tfs.txt --sp_rm TE_result_matrix.txt
+python tutorial_tf.py --fp_exp expression_dataTuck.csv 
+                      --fp_trj pseudotimeTuck.txt 
+                      --fp_br cell_selectTuck.txt 
+                      --fp_tf mouse_tfs.txt 
+                      --device lightning
+                      --num_devices 8
+                      --batch_size 32768
+                      --sp_rm TE_result_matrix.txt
 ```
 
 #### Output
