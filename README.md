@@ -56,7 +56,27 @@ To use optional frameworks, you need to install the framework manually
 
 <br>
 
-- CuPy: [Installing CuPy from Conda-Forge with cudatoolkit](https://docs.cupy.dev/en/stable/install.html#installing-cupy-from-conda-forge)
+- **PyTorch Lightning**
+
+PyTorch Lightning is a required dependency library for FastTENET and is installed automatically when you install FastTENET.\
+If the library is not installed, you can install it manually via pip.
+
+```angular2html
+python -m pip install lightning
+```
+<br>
+
+- **PyTorch**: [Installing custom PyTorch version](https://pytorch.org/get-started/locally/#start-locally)
+
+PyTorch is a required dependency library for FastTENET and is installed automatically when you install FastTENET.\
+If the library is not installed, you can install it manually via pip.
+
+```angular2html
+conda install pytorch torchvision torchaudio pytorch-cuda=xx.x -c pytorch -c nvidia (check your CUDA version)
+```
+<br>
+
+- **CuPy**: [Installing CuPy from Conda-Forge with cudatoolkit](https://docs.cupy.dev/en/stable/install.html#installing-cupy-from-conda-forge)
 
 Install Cupy from Conda-Forge with cudatoolkit supported by your driver
 ```angular2html
@@ -64,7 +84,7 @@ conda install -c conda-forge cupy cuda-version=xx.x (check your CUDA version)
 ```
 <br>
 
-- JAX: [Installing JAX refer to the installation guide in the project README](https://github.com/google/jax#installation)
+- **JAX**: [Installing JAX refer to the installation guide in the project README](https://github.com/google/jax#installation)
 
 [//]: # (**You must first install [CUDA]&#40;https://developer.nvidia.com/cuda-downloads&#41; and [CuDNN]&#40;https://developer.nvidia.com/cudnn&#41; before installing JAX**)
 
