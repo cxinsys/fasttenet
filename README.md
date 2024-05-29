@@ -69,7 +69,7 @@ python -m pip install lightning
 - **PyTorch**: [Installing custom PyTorch version](https://pytorch.org/get-started/locally/#start-locally)
 
 PyTorch is a required dependency library for FastTENET and is installed automatically when you install FastTENET.\
-If the library is not installed, you can install it manually via pip.
+If the library is not installed, you can install it manually.
 
 ```angular2html
 conda install pytorch torchvision torchaudio pytorch-cuda=xx.x -c pytorch -c nvidia (check your CUDA version)
