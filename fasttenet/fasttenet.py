@@ -97,7 +97,7 @@ class FastTENET(object):
             procs_per_device=None,
             batch_size=None,
             num_kernels=1,
-            method='pushing',
+            method='shift_left',
             kp=0.5,
             percentile=0,
             win_length=10,
@@ -171,19 +171,20 @@ class FastTENET(object):
                                             )
             self._result_matrix = self._mate.run(device='gpu',
                                                  devices=device_ids,
-                                                 batch_size=batch_size
+                                                 batch_size=batch_size,
+                                                 num_workers=procs_per_device
                                                  )
         else:
-            self._mate = mate.MATE()
+            self._mate = mate.MATE(kp=kp,
+                                   num_kernels=num_kernels,
+                                   method=method,
+                                   )
             self._result_matrix = self._mate.run(arr=arr,
                                                  pairs=pairs,
                                                  device=device,
                                                  device_ids=device_ids,
                                                  procs_per_device=procs_per_device,
                                                  batch_size=batch_size,
-                                                 kp=kp,
-                                                 num_kernels=num_kernels,
-                                                 method=method,
                                                  dt=dt
                                                  )
 
