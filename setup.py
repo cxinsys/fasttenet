@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='fasttenet',
-      version='0.0.2',
+      version='{{VERSION_PLACEHOLDER}}',
       description='FastTENET',
       url='http://github.com/cxinsys/fasttenet',
       author='Complex Intelligent Systems Laboratory (CISLAB)',
