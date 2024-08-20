@@ -90,7 +90,7 @@ class FastTENET(object):
         return self._refined_exp_data
 
     def run(self,
-            device=None,
+            backend=None,
             device_ids=None,
             procs_per_device=None,
             batch_size=0,
@@ -106,17 +106,17 @@ class FastTENET(object):
             config=None
             ):
 
-        if not device:
+        if not backend:
             if config:
-                device = config['DEVICE']
+                backend = config['DEVICE']
             else:
-                device = "cpu"
+                backend = "cpu"
 
         if not device_ids:
             if config:
                 device_ids = int(config['DEVICE_IDS'])
             else:
-                if 'cpu' in device:
+                if 'cpu' in backend:
                     device_ids = [0]
                 else:
                     device_ids = get_device_list()
@@ -127,7 +127,7 @@ class FastTENET(object):
             else:
                 procs_per_device = 1
 
-        if not batch_size and device.lower() != "tenet":
+        if not batch_size and backend.lower() != "tenet":
             if config:
                 batch_string = config['BATCH_SIZE'].split('**')
                 if len(batch_string) > 1:
@@ -159,7 +159,7 @@ class FastTENET(object):
 
         pairs = np.asarray(tuple(pairs), dtype=np.int32)
 
-        if device == 'lightning' or device == 'gpu' or device == 'cuda':
+        if backend == 'lightning' or backend == 'gpu' or backend == 'cuda':
             self._mate = mate.MATELightning(arr=arr,
                                             pairs=pairs,
                                             kp=kp,
@@ -167,7 +167,7 @@ class FastTENET(object):
                                             method=method,
                                             dt=dt
                                             )
-            self._result_matrix = self._mate.run(device='gpu',
+            self._result_matrix = self._mate.run(backend='gpu',
                                                  devices=device_ids,
                                                  batch_size=batch_size,
                                                  num_workers=procs_per_device
@@ -179,7 +179,7 @@ class FastTENET(object):
                                    )
             self._result_matrix = self._mate.run(arr=arr,
                                                  pairs=pairs,
-                                                 device=device,
+                                                 backend=backend,
                                                  device_ids=device_ids,
                                                  procs_per_device=procs_per_device,
                                                  batch_size=batch_size,

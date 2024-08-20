@@ -12,7 +12,7 @@ if __name__ == "__main__":
     parser.add_argument('--fp_exp', type=str, dest='fp_exp', required=True)
     parser.add_argument('--fp_trj', type=str, dest='fp_trj', required=True)
     parser.add_argument('--fp_br', type=str, dest='fp_br', required=True)
-    parser.add_argument('--device', type=str, dest='device', required=False, default='gpu')
+    parser.add_argument('--backend', type=str, dest='backend', required=False, default='gpu')
     parser.add_argument('--num_devices', type=int, dest='num_devices', required=False, default=8)
     parser.add_argument('--batch_size', type=int, dest='batch_size', required=False, default=2**15)
     parser.add_argument('--sp_rm', type=str, dest='sp_rm', required=False)
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     spath_result_matrix = osp.join(droot, args.sp_rm)
 
-    device = args.device
+    backend = args.backend
     num_devices = args.num_devices
     batch_size = args.batch_size
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
                            spath_result_matrix=spath_result_matrix, # Optional
                            make_binary=True) # Optional, default: False
 
-    result_matrix = worker.run(device=device,
+    result_matrix = worker.run(backend=backend,
                                device_ids=num_devices,
                                procs_per_device=1,
                                batch_size=batch_size, # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
