@@ -89,13 +89,11 @@ class FastTENET(object):
 
         return self._refined_exp_data
 
-    # multiprocessing worker(calculate tenet)
-
     def run(self,
             device=None,
             device_ids=None,
             procs_per_device=None,
-            batch_size=None,
+            batch_size=0,
             num_kernels=1,
             method='shift_left',
             kp=0.5,
@@ -129,7 +127,7 @@ class FastTENET(object):
             else:
                 procs_per_device = 1
 
-        if not batch_size:
+        if not batch_size and device.lower() != "tenet":
             if config:
                 batch_string = config['BATCH_SIZE'].split('**')
                 if len(batch_string) > 1:
