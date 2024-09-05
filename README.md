@@ -155,7 +155,7 @@ worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
 #### Run FastTENET
 
 #### parameters
-- **device**: optional, default: 'cpu'
+- **backend**: optional, default: 'cpu'
 - **device_ids**: list or number of devcies to use, optional, default: [0] (cpu), [list of whole gpu devices] (gpu) 
 - **procs_per_device**: The number of processes to create per device when using non 'cpu' devices, optional, default: 1
 - **batch_size**: Required
@@ -164,7 +164,7 @@ worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
 
 
 ```angular2html
-result_matrix = worker.run(device='gpu',
+result_matrix = worker.run(backend='gpu',
                                 device_ids=8,
                                 procs_per_device=4,
                                 batch_size=2 ** 16,
@@ -202,7 +202,7 @@ TE_result_matrix.txt
 python tutorial_notf.py --fp_exp [expression file path] 
                         --fp_trj [trajectory file path] 
                         --fp_br [cell select file path] 
-                        --device [name of backend framework]
+                        --backend [name of backend framework]
                         --num_devices [number of devices]
                         --batch_size [batch size]
                         --sp_rm [save file path]
@@ -213,7 +213,7 @@ python tutorial_notf.py --fp_exp [expression file path]
 python tutorial_notf.py --fp_exp expression_dataTuck.csv 
                         --fp_trj pseudotimeTuck.txt 
                         --fp_br cell_selectTuck.txt 
-                        --device lightning
+                        --backend lightning
                         --num_devices 8
                         --batch_size 32768
                         --sp_rm TE_result_matrix.txt
@@ -233,7 +233,7 @@ python tutorial_tf.py --fp_exp [expression file path]
                       --fp_trj [trajectory file path] 
                       --fp_br [cell select file path] 
                       --fp_tf [tf file path] 
-                      --device [name of backend framework]
+                      --backend [name of backend framework]
                       --num_devices [number of devices]
                       --batch_size [batch size]
                       --sp_rm [save file path]
@@ -245,7 +245,7 @@ python tutorial_tf.py --fp_exp expression_dataTuck.csv
                       --fp_trj pseudotimeTuck.txt 
                       --fp_br cell_selectTuck.txt 
                       --fp_tf mouse_tfs.txt 
-                      --device lightning
+                      --backend lightning
                       --num_devices 8
                       --batch_size 32768
                       --sp_rm TE_result_matrix.txt

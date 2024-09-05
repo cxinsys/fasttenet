@@ -9,7 +9,7 @@ INIT:
   SPATH_RESULT: "TE_result_matrix.txt"
   MAKE_BINARY: True
 
-DEVICE: "gpu"
+BACKEND: "gpu"
 DEVICE_IDS: 8
 PROCS_PER_DEVICE: 4
 BATCH_SIZE: 2**16
