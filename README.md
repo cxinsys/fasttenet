@@ -111,7 +111,7 @@ Use 'XLA_PYTHON_CLIENT_PREALLOCATE=false' to disables the preallocation behavior
 
 <br>
 
-- TensorFlow: [Installing TensorFlow refer to the installation guide](https://www.tensorflow.org/install/pip?hl=en#linux)
+- **TensorFlow**: [Installing TensorFlow refer to the installation guide](https://www.tensorflow.org/install/pip?hl=en#linux)
 
 [//]: # (**You must first install [CUDA]&#40;https://developer.nvidia.com/cuda-downloads&#41; and [CuDNN]&#40;https://developer.nvidia.com/cudnn&#41; before installing JAX**)
 
