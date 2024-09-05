@@ -59,10 +59,10 @@ pip install -e .
 
 <br>
 
-### Install optional frameworks
+### Install backend frameworks
 
-FastTENET supports several optional backend frameworks such as CuPy and JAX. \
-To use optional frameworks, you need to install the framework manually
+FastTENET supports several backend frameworks including CuPy, JAX, TensorFlow, PyTorch and PyTorch-Lightning. \
+To use frameworks, you need to install the framework manually
 
 <br>
 
