@@ -114,7 +114,10 @@ class FastTENET(object):
 
         if not device_ids:
             if config:
-                device_ids = int(config['DEVICE_IDS'])
+                if type(config['DEVICE_IDS']) == int:
+                    device_ids = int(config['DEVICE_IDS'])
+                else:
+                    device_ids = list(config['DEVICE_IDS'])
             else:
                 if 'cpu' in backend:
                     device_ids = [0]
