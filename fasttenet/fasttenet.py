@@ -108,7 +108,7 @@ class FastTENET(object):
 
         if not backend:
             if config:
-                backend = config['DEVICE']
+                backend = config['BACKEND']
             else:
                 backend = "cpu"
 
