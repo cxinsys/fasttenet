@@ -13,7 +13,7 @@ import networkx as nx
 
 parser = argparse.ArgumentParser(description='dpath parser')
 parser.add_argument('--fp_rm', type=str, dest='fp_rm', required=True)
-parser.add_argument('--fp_nn', type=str, dest='fp_nn', required=True)
+parser.add_argument('--fp_exp', type=str, dest='fp_exp', required=True)
 parser.add_argument('--fp_tf', type=str, dest='fp_tf', required=False, default='None')
 parser.add_argument('--fdr', type=float, dest='fdr', required=False, default=0.01)
 parser.add_argument('--t_degrees', type=int, dest='dgs', required=False, default=0)
@@ -24,7 +24,7 @@ args = parser.parse_args()
 droot = osp.dirname(args.fp_rm)
 
 fpath_rm = osp.abspath(args.fp_rm)
-fpath_nn = osp.abspath(args.fp_nn)
+fpath_exp = osp.abspath(args.fp_exp)
 fdr = args.fdr
 dgs = args.dgs
 
@@ -34,7 +34,7 @@ result_matrix = np.loadtxt(fpath_rm, delimiter='\t', dtype=np.float32)
 
 print("Number of genes: ", len(result_matrix))
 
-gene_name = np.load(fpath_nn)
+gene_name = np.load(fpath_exp[:-4] + '_node_name.npy')
 
 pairs = permutations(range(len(gene_name)), 2)
 pairs = np.asarray(tuple(pairs))
