@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='fasttenet',
-      version='0.1.1',
+      version='{{VERSION_PLACEHOLDER}}',
       description='FastTENET',
       url='http://github.com/cxinsys/fasttenet',
       author='Complex Intelligent Systems Laboratory (CISLAB)',
@@ -10,5 +10,5 @@ setup(name='fasttenet',
       long_description=open('README.md').read(),
       long_description_content_type='text/markdown',
       packages=find_packages(),
-      install_requires=['numpy', 'statsmodels', 'networkx', 'tqdm', 'matplotlib', 'omegaconf', 'mate-cxinsys'],
+      install_requires=['numpy', 'statsmodels', 'networkx', 'tqdm', 'matplotlib', 'omegaconf', 'mate-cxinsys', 'scikit-learn'],
       zip_safe=False,)
