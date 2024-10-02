@@ -34,7 +34,10 @@ class FastTENET(object):
             dpath_exp_data = osp.join(droot, inits['FPATH_EXP'])
             dpath_trj_data = osp.join(droot, inits['FPATH_TRJ'])
             dpath_branch_data = osp.join(droot, inits['FPATH_BRANCH'])
-            dpath_tf_data = osp.join(droot, inits['FPATH_TF'])
+
+            if 'FPATH_TF' in inits:
+                dpath_tf_data = osp.join(droot, inits['FPATH_TF'])
+
             make_binary = bool(inits['MAKE_BINARY'])
 
             self._node_name, self._exp_data = load_exp_data(dpath_exp_data, make_binary)
@@ -97,11 +100,8 @@ class FastTENET(object):
             num_kernels=1,
             method='shift_left',
             kp=0.5,
-            percentile=0,
-            win_length=10,
-            polyorder=3,
-            kw_smooth=True,
-            data_smooth=True,
+            binningfamily: dict = None,
+            smoothfamily: dict = None,
             dt=1,
             config=None
             ):
@@ -146,6 +146,11 @@ class FastTENET(object):
             kp = float(config['KP'])
             dt = int(config['DT'])
 
+            if 'BINNINGFAMILY' in config:
+                binnigfamily = config['BINNINGFAMILY']
+            if 'SMOOTHFAMILY' in config:
+                smoothfamily = config['SMOOTHFAMILY']
+
         arr = self.refine_data()
 
         pairs = []
@@ -168,6 +173,8 @@ class FastTENET(object):
                                             kp=kp,
                                             num_kernels=num_kernels,
                                             method=method,
+                                            binningfamily=binningfamily,
+                                            smoothfamily=smoothfamily,
                                             dt=dt
                                             )
             self._result_matrix = self._mate.run(backend='gpu',
@@ -179,6 +186,8 @@ class FastTENET(object):
             self._mate = mate.MATE(kp=kp,
                                    num_kernels=num_kernels,
                                    method=method,
+                                   binningfamily=binningfamily,
+                                   smoothfamily=smoothfamily,
                                    )
             self._result_matrix = self._mate.run(arr=arr,
                                                  pairs=pairs,
