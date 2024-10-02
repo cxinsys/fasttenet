@@ -10,5 +10,5 @@ setup(name='fasttenet',
       long_description=open('README.md').read(),
       long_description_content_type='text/markdown',
       packages=find_packages(),
-      install_requires=['numpy', 'statsmodels', 'networkx', 'tqdm', 'matplotlib', 'omegaconf', 'mate-cxinsys', 'scikit-learn'],
+      install_requires=['numpy', 'statsmodels', 'networkx', 'tqdm', 'matplotlib', 'omegaconf', 'mate-cxinsys'],
       zip_safe=False,)
