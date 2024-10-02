@@ -36,7 +36,6 @@ class FastTENET(object):
             dpath_branch_data = osp.join(droot, inits['FPATH_BRANCH'])
 
             if 'FPATH_TF' in inits:
-
                 dpath_tf_data = osp.join(droot, inits['FPATH_TF'])
 
             make_binary = bool(inits['MAKE_BINARY'])
