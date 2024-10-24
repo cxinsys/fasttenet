@@ -98,7 +98,7 @@ class FastTENET(object):
             procs_per_device=None,
             batch_size=0,
             num_kernels=1,
-            method='shift_left',
+            method='FSBW-L',
             kp=0.5,
             binningfamily: dict = None,
             smoothfamily: dict = None,
@@ -147,7 +147,7 @@ class FastTENET(object):
             dt = int(config['DT'])
 
             if 'BINNINGFAMILY' in config:
-                binnigfamily = config['BINNINGFAMILY']
+                binningfamily = config['BINNINGFAMILY']
             if 'SMOOTHFAMILY' in config:
                 smoothfamily = config['SMOOTHFAMILY']
 
