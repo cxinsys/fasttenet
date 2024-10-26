@@ -9,9 +9,9 @@ INIT:
   SPATH_RESULT: "TE_result_matrix.txt"
   MAKE_BINARY: True
 
-BACKEND: "gpu"
+BACKEND: "torch"
 DEVICE_IDS: 8
-PROCS_PER_DEVICE: 4
+PROCS_PER_DEVICE: 1
 BATCH_SIZE: 2**12
 
 # you can select various discretizer by changing the METHOD parameter including
