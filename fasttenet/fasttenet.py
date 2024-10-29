@@ -173,8 +173,8 @@ class FastTENET(object):
                                             kp=kp,
                                             num_kernels=num_kernels,
                                             binning_method=binning_method,
-                                            binningfamily=binning_opt,
-                                            smoothfamily=smoothing_opt,
+                                            binning_opt=binning_opt,
+                                            smoothing_opt=smoothing_opt,
                                             dt=dt
                                             )
             self._result_matrix = self._mate.run(backend='gpu',
@@ -186,8 +186,8 @@ class FastTENET(object):
             self._mate = mate.MATE(kp=kp,
                                    num_kernels=num_kernels,
                                    binning_method=binning_method,
-                                   binningfamily=binning_opt,
-                                   smoothfamily=smoothing_opt,
+                                   binning_opt=binning_opt,
+                                   smoothing_opt=smoothing_opt,
                                    )
             self._result_matrix = self._mate.run(arr=arr,
                                                  pairs=pairs,
