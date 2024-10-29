@@ -303,5 +303,6 @@ TE_result_matrix.byGRN.fdr0.06.trimIndirect0.sif, TE_result_matrix.byGRN.fdr0.06
 
 ## TODO
 
-- [x] add 'jax' backend module
-- [x] add 'lightning' backend module
+- [x] add 'JAX' backend module
+- [x] add 'PyTorch Lightning' backend module
+- [x] add 'TensorFlow' backend module
