@@ -172,7 +172,7 @@ class FastTENET(object):
                                             pairs=pairs,
                                             kp=kp,
                                             num_kernels=num_kernels,
-                                            method=binning_method,
+                                            binning_method=binning_method,
                                             binningfamily=binning_opt,
                                             smoothfamily=smoothing_opt,
                                             dt=dt
@@ -185,7 +185,7 @@ class FastTENET(object):
         else:
             self._mate = mate.MATE(kp=kp,
                                    num_kernels=num_kernels,
-                                   method=binning_method,
+                                   binning_method=binning_method,
                                    binningfamily=binning_opt,
                                    smoothfamily=smoothing_opt,
                                    )
