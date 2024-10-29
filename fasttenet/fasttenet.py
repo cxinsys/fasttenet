@@ -98,10 +98,10 @@ class FastTENET(object):
             procs_per_device=None,
             batch_size=0,
             num_kernels=1,
-            method='FSBW-L',
+            binning_method='FSBW-L',
             kp=0.5,
-            binningfamily: dict = None,
-            smoothfamily: dict = None,
+            binning_opt: dict = None,
+            smoothing_opt: dict = None,
             dt=1,
             config=None
             ):
@@ -141,15 +141,15 @@ class FastTENET(object):
                 raise ValueError("batch size should be refined")
 
         if config:
-            method = config['METHOD']
+            binning_method = config['BINNINGMETHOD']
             num_kernels = int(config['NUM_KERNELS'])
             kp = float(config['KP'])
             dt = int(config['DT'])
 
-            if 'BINNINGFAMILY' in config:
-                binningfamily = config['BINNINGFAMILY']
-            if 'SMOOTHFAMILY' in config:
-                smoothfamily = config['SMOOTHFAMILY']
+            if 'BINNINGOPT' in config:
+                binning_opt = config['BINNINGOPT']
+            if 'SMOOTHOPT' in config:
+                smoothing_opt = config['SMOOTHINGOPT']
 
         arr = self.refine_data()
 
@@ -172,9 +172,9 @@ class FastTENET(object):
                                             pairs=pairs,
                                             kp=kp,
                                             num_kernels=num_kernels,
-                                            method=method,
-                                            binningfamily=binningfamily,
-                                            smoothfamily=smoothfamily,
+                                            method=binning_method,
+                                            binningfamily=binning_opt,
+                                            smoothfamily=smoothing_opt,
                                             dt=dt
                                             )
             self._result_matrix = self._mate.run(backend='gpu',
@@ -185,9 +185,9 @@ class FastTENET(object):
         else:
             self._mate = mate.MATE(kp=kp,
                                    num_kernels=num_kernels,
-                                   method=method,
-                                   binningfamily=binningfamily,
-                                   smoothfamily=smoothfamily,
+                                   method=binning_method,
+                                   binningfamily=binning_opt,
+                                   smoothfamily=smoothing_opt,
                                    )
             self._result_matrix = self._mate.run(arr=arr,
                                                  pairs=pairs,

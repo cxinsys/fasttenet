@@ -17,7 +17,7 @@ BATCH_SIZE: 2**12
 # you can select various discretizer by changing the METHOD parameter including
 # "interpolation", "tag", "fix", "quantile", "kmeans", "log"
 # but we recommend using "shift_left" as it gives the most similar results to TENET
-METHOD: "FSBW-L"
+BINNINGMETHOD: "FSBW-L"
 NUM_KERNELS: 1
 KP: 0.5
 DT: 1
@@ -25,4 +25,4 @@ DT: 1
 # you can use smooth function by changing the SMOOTHFAMILY parameter
 # the SMOOTHFAMILY parameter is optional and must be dictionary type (ex. {'method': 'exp'})
 # 'mov', 'savgol', 'exp', 'loess' method parameters are available.
-SMOOTHFAMILY: None
+SMOOTHINGOPT: None

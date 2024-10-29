@@ -41,13 +41,7 @@ if __name__ == "__main__":
                            spath_result_matrix=spath_result_matrix, # Optional
                            make_binary=True) # Optional, default: False
 
-    result_matrix = worker.run(backend=backend,
-                               device_ids=num_devices,
-                               procs_per_device=1,
-                               batch_size=batch_size, # k1 - 2080ti: 2**15, 3090: 2**16 / k3 - 2**14, 2**15
-                               num_kernels=1,
-                               method='FSBW-L',
-                               kp=0.5,
-                               )
+    result_matrix = worker.run(backend=backend, device_ids=num_devices, procs_per_device=1, batch_size=batch_size,
+                               num_kernels=1, binning_method='FSBW-L', kp=0.5)
 
     # print(result_matrix)
