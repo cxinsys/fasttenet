@@ -9,8 +9,8 @@ INIT:
   SPATH_RESULT: "TE_result_matrix.txt"
   MAKE_BINARY: True
 
-BACKEND: "torch"
-DEVICE_IDS: 8
+BACKEND: "gpu"
+DEVICE_IDS: 1
 PROCS_PER_DEVICE: 1
 BATCH_SIZE: 2**16
 
