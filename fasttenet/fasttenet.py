@@ -77,7 +77,11 @@ class FastTENET(object):
         if self._result_matrix is None:
             raise ValueError("Result matrix should be refined")
 
-        np.savetxt(spath_result_matrix, self._result_matrix, delimiter='\t', fmt='%8f')
+        tmp_rm = np.concatenate([self._node_name[:, None], self._result_matrix.astype(str)], axis=1)
+        extended_nn = np.concatenate((['TE'], self._node_name))
+        tmp_rm = np.concatenate([extended_nn[None, :], tmp_rm])
+
+        np.savetxt(spath_result_matrix, self._result_matrix, delimiter='\t', fmt='%s')
         print("Save result matrix: {}".format(spath_result_matrix))
 
     # data refining

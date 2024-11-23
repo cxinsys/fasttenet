@@ -260,7 +260,6 @@ TE_result_matrix.txt
 ### Run make_grn.py
 #### parameters
 - **fp_rm**: result matrix, required
-- **fp_exp**: expression file path for extracting node name file, required
 - **fp_tf**: tf list file, optional
 - **fdr**: specifying fdr, optional, default: 0.01
 - **t_degrees**: specifying number of outdegrees, optional, generate final GRNs by incrementally increasing the fdr \
@@ -270,12 +269,12 @@ value until the total number of outdegrees is greater than the parameter value.
 #### Usage
 When specifying an fdr
 ```angular2html
-python make_grn.py --fp_rm [result matrix path] --fp_exp [expression file path] --fp_tf [tf file path] --fdr [fdr]
+python make_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --fdr [fdr]
 ```
 
 #### Example
 ```angular2html
-python make_grn.py --fp_rm TE_result_matrix.txt --fp_exp expression_dataTuck.csv --fp_tf mouse_tf.txt --fdr 0.01
+python make_grn.py --fp_rm TE_result_matrix.txt --fp_tf mouse_tf.txt --fdr 0.01
 ```
 
 #### Output
@@ -287,12 +286,12 @@ TE_result_matrix.byGRN.fdr0.01.trimIndirect0.sif, TE_result_matrix.byGRN.fdr0.01
 #### Usage
 When specifying the t_degrees
 ```angular2html
-python make_grn.py --fp_rm [result matrix path] --fp_exp [expression file path] --fp_tf [tf file path] --t_degrees [number of outdegrees]
+python make_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --t_degrees [number of outdegrees]
 ```
 
 #### Example
 ```angular2html
-python make_grn.py --fp_rm TE_result_matrix.txt --fp_exp expression_dataTuck.csv --fp_tf mouse_tf.txt --t_degrees 1000
+python make_grn.py --fp_rm TE_result_matrix.txt--fp_tf mouse_tf.txt --t_degrees 1000
 ```
 
 #### Output
