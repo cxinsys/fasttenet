@@ -15,8 +15,8 @@ PROCS_PER_DEVICE: 1
 BATCH_SIZE: 2**16
 
 # you can select various discretizer by changing the METHOD parameter including
-# "interpolation", "tag", "fix", "quantile", "kmeans", "log"
-# but we recommend using "shift_left" as it gives the most similar results to TENET
+# "FSBW", "FSBN", "FSBQ", "K-means"
+# but we recommend using "FSBW-L" as it gives the most similar results to TENET
 BINNINGMETHOD: "FSBW-L"
 NUM_KERNELS: 1
 KP: 0.5

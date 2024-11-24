@@ -9,14 +9,14 @@ INIT:
   SPATH_RESULT: "TE_result_matrix.txt"
   MAKE_BINARY: True
 
-BACKEND: "torch"
-DEVICE_IDS: 8
+BACKEND: "gpu"
+DEVICE_IDS: 1
 PROCS_PER_DEVICE: 1
 BATCH_SIZE: 2**12
 
 # you can select various discretizer by changing the METHOD parameter including
-# "interpolation", "tag", "fix", "quantile", "kmeans", "log"
-# but we recommend using "shift_left" as it gives the most similar results to TENET
+# "FSBW", "FSBN", "FSBQ", "K-means"
+# but we recommend using "FSBW-L" as it gives the most similar results to TENET
 BINNINGMETHOD: "FSBW-L"
 NUM_KERNELS: 1
 KP: 0.5
