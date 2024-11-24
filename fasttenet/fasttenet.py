@@ -146,10 +146,11 @@ class FastTENET(object):
 
         if config:
             binning_method = config['BINNINGMETHOD']
-            num_kernels = int(config['NUM_KERNELS'])
             kp = float(config['KP'])
             dt = int(config['DT'])
 
+            if 'NUM_KERNELS' in config:
+                num_kernels = int(config['NUM_KERNELS'])
             if 'BINNINGOPT' in config:
                 binning_opt = config['BINNINGOPT']
             if 'SMOOTHOPT' in config:
