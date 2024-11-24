@@ -18,9 +18,7 @@ BATCH_SIZE: 2**16
 # "FSBW", "FSBN", "FSBQ", "K-means"
 # but we recommend using "FSBW-L" as it gives the most similar results to TENET
 BINNINGMETHOD: "FSBW-L"
-NUM_KERNELS: 1
 KP: 0.5
-DT: 1
 
 # you can use smooth function by changing the SMOOTHFAMILY parameter
 # the SMOOTHFAMILY parameter is optional and must be dictionary type (ex. {'method': 'exp'})
