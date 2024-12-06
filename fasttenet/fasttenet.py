@@ -10,8 +10,8 @@ import numpy as np
 from scipy.signal import savgol_filter
 import mate
 
-from fasttenet.data import load_exp_data, load_time_data
-from fasttenet.utils import get_device_list
+from fasttenet.utils import load_exp_data, load_time_data
+from fasttenet.utils import get_device_list, align_data
 
 class FastTENET(object):
     def __init__(self,
@@ -22,11 +22,14 @@ class FastTENET(object):
                  spath_result_matrix=None,
                  make_binary=False,
                  config=None,
+                 aligned_data=None,
+                 node_name=None,
+                 tfs=None
                  ):
 
         self._tf = None
-        self._refined_exp_data = None
         self._result_matrix = None
+        self._refined_data = None
 
         if config:
             inits = config['INIT']
@@ -50,19 +53,24 @@ class FastTENET(object):
             self._spath_result_matrix = osp.join(droot, inits['SPATH_RESULT'])
 
         else:
-            if not dpath_exp_data:
-                raise ValueError("Expression data should be refined")
-            if not dpath_trj_data:
-                raise ValueError("Trajectory should be refined")
-            if not dpath_branch_data:
-                raise ValueError("Branch data should be refined")
+            if aligned_data is not None:
+                self._refined_data = aligned_data
 
-            self._node_name, self._exp_data = load_exp_data(dpath_exp_data, make_binary)
-            self._trajectory = load_time_data(dpath_trj_data, dtype=np.float32)
-            self._branch = load_time_data(dpath_branch_data, dtype=np.int32)
+                if node_name is None:
+                    raise ValueError("node name data should be defined if using refined data directly")
 
-            if dpath_tf_data is not None:
-                self._tf = np.loadtxt(dpath_tf_data, dtype=str)
+                self._node_name = node_name
+                self._tf = tfs
+            else:
+                if not dpath_exp_data or not dpath_trj_data or not dpath_branch_data:
+                    raise ValueError("One of the following variable is not defined correctly: dpath_exp_data, dpath_trj_data, dpath_branch_data")
+
+                self._node_name, self._exp_data = load_exp_data(dpath_exp_data, make_binary)
+                self._trajectory = load_time_data(dpath_trj_data, dtype=np.float32)
+                self._branch = load_time_data(dpath_branch_data, dtype=np.int32)
+
+                if dpath_tf_data is not None:
+                    self._tf = np.loadtxt(dpath_tf_data, dtype=str)
 
             self._spath_result_matrix = spath_result_matrix
 
@@ -71,11 +79,11 @@ class FastTENET(object):
     def save_result_matrix(self, spath_result_matrix=None):
         if spath_result_matrix is None:
             if self._spath_result_matrix is None:
-                raise ValueError("Save path should be refined")
+                raise ValueError("Unexpected error on 'spath_result_matrix' has been occurred")
             spath_result_matrix = self._spath_result_matrix
 
         if self._result_matrix is None:
-            raise ValueError("Result matrix should be refined")
+            raise ValueError("Unexpected error on 'result_matrix' has been occurred")
 
         tmp_rm = np.concatenate([self._node_name[:, None], self._result_matrix.astype(str)], axis=1)
         extended_nn = np.concatenate((['TE'], self._node_name))
@@ -85,16 +93,6 @@ class FastTENET(object):
         print("Save result matrix: {}".format(spath_result_matrix))
 
     # data refining
-
-    def refine_data(self):
-        if self._refined_exp_data is None:
-            selected_trj = self._trajectory[self._branch == 1]
-            inds_sorted_trj = np.argsort(selected_trj)
-
-            selected_exp_data = self._exp_data[:, self._branch == 1]
-            self._refined_exp_data = selected_exp_data[:, inds_sorted_trj]
-
-        return self._refined_exp_data
 
     def run(self,
             backend=None,
@@ -157,7 +155,10 @@ class FastTENET(object):
             if 'SMOOTHOPT' in config:
                 smoothing_opt = config['SMOOTHINGOPT']
 
-        arr = self.refine_data()
+        if self._refined_data is not None:
+            arr = self._refined_data
+        else:
+            arr = align_data(data=self._exp_data, trj=self._trajectory, branch=self._branch)
 
         pairs = []
         if self._tf is not None:

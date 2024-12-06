@@ -151,6 +151,26 @@ worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
                            make_binary=True)
 ```
 
+- **aligned_data**: when directly using rearranged data with expression data, trajectory data and branch data, optional
+- **node_name**: 1d array of node names, required when using data directly
+- **tf**: 1d array of tf names, optional when using data directly
+
+```angular2html
+import fasttenet as fte
+
+node_name, exp_data = fte.load_exp_data(dpath_exp_data, make_binary=True)
+trajectory = fte.load_time_data(dpath_trj_data, dtype=np.float32)
+branch = fte.load_time_data(dpath_branch_data, dtype=np.int32)
+tf = np.loadtxt(dpath_tf_data, dtype=str)
+
+aligned_data = fte.align_data(data=exp_data, trj=trajectory, branch=branch)
+        
+worker = fte.FastTENET(aligned_data=aligned_data,
+                       node_name=node_name,
+                       tfs=tf,
+                       spath_result_matrix=spath_result_matrix) # Optional
+```
+
 
 #### Run FastTENET
 

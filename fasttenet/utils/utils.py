@@ -21,3 +21,13 @@ def get_device_list():
         raise ImportError("GPU module (CuPy or PyTorch) not found. Please install it before proceeding.")
 
     return [i for i in range(n_gpus)]
+
+
+def align_data(data, trj, branch):
+    selected_trj = trj[branch == 1]
+    inds_sorted_trj = np.argsort(selected_trj)
+
+    selected_exp_data = data[:, branch == 1]
+    refined_exp_data = selected_exp_data[:, inds_sorted_trj]
+
+    return refined_exp_data
