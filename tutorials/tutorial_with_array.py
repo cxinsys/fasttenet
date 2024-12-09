@@ -37,11 +37,11 @@ if __name__ == "__main__":
     branch = fte.load_time_data(dpath_branch_data, dtype=np.int32)
     tf = np.loadtxt(dpath_tf_data, dtype=str)
 
+    # expression data, trajectory data and branch data are required
     aligned_data = fte.align_data(data=exp_data, trj=trajectory, branch=branch)
 
     # Create worker
-    # expression data, trajectory data, branch data path is required
-    # tf data path is optional
+    # tf data is optional
     # save path is optional
     worker = fte.FastTENET(aligned_data=aligned_data,
                            node_name=node_name,
