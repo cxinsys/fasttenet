@@ -143,7 +143,7 @@ class FastTENET(object):
                 raise ValueError("batch size should be refined")
 
         if config:
-            binning_method = config['BINNINGMETHOD']
+            binning_method = config['BINNING_METHOD']
             kp = float(config['KP'])
 
             if 'NUM_KERNELS' in config:
@@ -151,9 +151,9 @@ class FastTENET(object):
             if 'DT' in config:
                 dt = int(config['DT'])
             if 'BINNINGOPT' in config:
-                binning_opt = config['BINNINGOPT']
+                binning_opt = config['BINNING_OPT']
             if 'SMOOTHOPT' in config:
-                smoothing_opt = config['SMOOTHINGOPT']
+                smoothing_opt = config['SMOOTHING_OPT']
 
         if self._refined_data is not None:
             arr = self._refined_data

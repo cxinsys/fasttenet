@@ -14,13 +14,13 @@ DEVICE_IDS: 1
 PROCS_PER_DEVICE: 1
 BATCH_SIZE: 2**12
 
-# you can select various discretizer by changing the METHOD parameter including
+# you can select various discretizer by changing the BINNING_METHOD parameter including
 # "FSBW", "FSBN", "FSBQ", "K-means"
 # but we recommend using "FSBW-L" as it gives the most similar results to TENET
-BINNINGMETHOD: "FSBW-L"
+BINNING_METHOD: "FSBW-L"
 KP: 0.5
 
-# you can use smooth function by changing the SMOOTHFAMILY parameter
-# the SMOOTHFAMILY parameter is optional and must be dictionary type (ex. {'method': 'exp'})
+# you can use smooth function by changing the SMOOTHING_OPT parameter
+# the SMOOTHING_OPT parameter is optional and must be dictionary type (ex. {'method': 'exp'})
 # 'mov', 'savgol', 'exp', 'loess' method parameters are available.
-SMOOTHINGOPT: None
+SMOOTHING_OPT: None
