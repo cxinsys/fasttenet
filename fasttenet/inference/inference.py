@@ -100,6 +100,8 @@ class NetWeaver(object):
 
         te_grn = np.stack((source_cutoff, te_cutoff, target_cutoff), axis=1)
 
+        print("[Statistical analysis done]")
+
         if self.is_trimming:
             if not batch_size:
                 print("[Batch Size auto calculated]")
