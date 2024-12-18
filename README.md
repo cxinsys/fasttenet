@@ -125,10 +125,9 @@ python3 -m pip install tensorflow[and-cuda]
 <br>
 
 
-## Tutorial
+## FastTENET tutorial
 
-### FastTENET class
-#### Create FastTENET instance
+### Create FastTENET instance
 
 FastTENET class requires data path as parameter
 
@@ -144,12 +143,14 @@ FastTENET class requires data path as parameter
 import fasttenet as fte
 
 worker = fte.FastTENET(dpath_exp_data=dpath_exp_data,
-                           dpath_trj_data=dpath_trj_data,
-                           dpath_branch_data=dpath_branch_data,
-                           dpath_tf_data=dpath_tf_data,
-                           spath_result_matrix=spath_result_matrix,
-                           make_binary=True)
+                       dpath_trj_data=dpath_trj_data,
+                       dpath_branch_data=dpath_branch_data,
+                       dpath_tf_data=dpath_tf_data,
+                       spath_result_matrix=spath_result_matrix,
+                       make_binary=True)
 ```
+
+<br>
 
 - **aligned_data**: when directly using rearranged data with expression data, trajectory data and branch data, optional
 - **node_name**: 1d array of node names, required when using data directly
@@ -171,8 +172,10 @@ worker = fte.FastTENET(aligned_data=aligned_data,
                        spath_result_matrix=spath_result_matrix) # Optional
 ```
 
+<br>
+<br>
 
-#### Run FastTENET
+### Run FastTENET
 
 #### parameters
 - **backend**: optional, default: 'cpu'
@@ -185,15 +188,17 @@ worker = fte.FastTENET(aligned_data=aligned_data,
 
 ```angular2html
 result_matrix = worker.run(backend='gpu',
-                                device_ids=8,
-                                procs_per_device=4,
-                                batch_size=2 ** 16,
-                                kp=0.5,
-                                binning_method='FSBW-L',
-                                )
+                           device_ids=8,
+                           procs_per_device=4,
+                           batch_size=2 ** 16,
+                           kp=0.5,
+                           binning_method='FSBW-L')
 ```
 
-### Run FastTENET with YAML config file
+<br>
+<br>
+
+### Run FastTENET with config file
 
 - **Before run tutorial_config.py, batch_size parameter must be modified to fit your gpu memory size**
 - **You can set parameters and run FastTENET via a YAML file**
@@ -212,6 +217,16 @@ python tutorial_config.py --config ../configs/config_tuck_sub.yml
 #### Output
 ```angular2html
 TE_result_matrix.txt
+
+ex)
+TE	GENE_1	GENE_2	GENE_3	...	GENE_M
+GENE_1	0	0.05	0.02	...	0.004
+GENE_2	0.01	0	0.04	...	0.12
+GENE_3	0.003	0.003	0	...	0.001
+.
+.
+.
+GENE_M	0.34	0.012	0.032	...	0
 ```
 
 ### Run FastTENET with tutorial_notf.py
@@ -275,49 +290,115 @@ python tutorial_tf.py --fp_exp expression_dataTuck.csv
 #### Output
 ```angular2html
 TE_result_matrix.txt
+
+ex)
+TE	GENE_1	GENE_2	GENE_3	...	GENE_M
+GENE_1	0	0.05	0.02	...	0.004
+GENE_2	0.01	0	0.04	...	0.12
+GENE_3	0.003	0.003	0	...	0.001
+.
+.
+.
+GENE_M	0.34	0.012	0.032	...	0
 ```
 
-### Run make_grn.py
+<br>
+<br>
+
+## Downstream analysis tutorial
+
+### Create NetWeaver instance
+
+
+
 #### parameters
-- **fp_rm**: result matrix, required
-- **fp_tf**: tf list file, optional
+
+- **result_matrix**: result TE matrix of FastTENET, required
+- **gene_names**: gene names from result matrix, required
+- **tfs**: tf list, optional
 - **fdr**: specifying fdr, optional, default: 0.01
-- **t_degrees**: specifying number of outdegrees, optional, generate final GRNs by incrementally increasing the fdr \
-value until the total number of outdegrees is greater than the parameter value.
+- **links**: specifying number of outdegrees, optional, default: 0
+- **is_trimming**: if set True, trimming operation is applied on grn, optional, default: True
 - **trim_threshold**: trimming threshold, optional, default: 0
+
+```angular2html
+result_matrix = np.loadtxt(fpath_result_matrix, delimiter='\t', dtype=str)
+gene_name = result_matrix[0][1:]
+result_matrix = result_matrix[1:, 1:].astype(np.float32)
+
+tf = np.loadtxt(fpath_tf, dtype=str)
+
+weaver = fte.NetWeaver(result_matrix=result_matrix,
+                       gene_names=gene_name,
+                       tfs=tf,
+                       fdr=fdr,
+                       links=links,
+                       is_trimming=True,
+                       trim_threshold=trim_threshold,
+                       dtype=np.float32
+                       )
+```
+
+### Run weaver
+- **backend**: optional, default: 'cpu'
+- **device_ids**: list or number of devices to use, optional, default: [0] (cpu), [list of whole gpu devices] (gpu) 
+- **batch_size**: if set to 0, batch size will automatically calculated, optional, default: 0
+
+```angular2html
+grn, trimmed_grn = weaver.run(backend=backend,
+                              device_ids=device_ids,
+                              batch_size=batch_size)
+```
+
+### Count outdegree
+- **grn**: required
+
+```angular2html
+outdegrees = weaver.count_outdegree(grn)
+trimmed_ods = weaver.count_outdegree(trimmed_grn)
+```
+
+<br>
+<br>
+
+### Downstream analysis with reconstruct_grn.py
+
+reconstruct_grn.py is a tutorial script for the output of grn and outdegree files.
 
 #### Usage
 When specifying an fdr
 ```angular2html
-python make_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --fdr [fdr]
+python reconstruct_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --fdr [fdr] --backend [backend] --device_ids [number of device]
 ```
 
 #### Example
 ```angular2html
-python make_grn.py --fp_rm TE_result_matrix.txt --fp_tf mouse_tf.txt --fdr 0.01
+python reconstruct_grn.py --fp_rm TE_result_matrix.txt --fp_tf mouse_tf.txt --fdr 0.01 --backend gpu --device_ids 1
 ```
 
 #### Output
 ```angular2html
-TE_result_matrix.byGRN.fdr0.01.sif, TE_result_matrix.byGRN.fdr0.01.sif.outdegrees.txt
-TE_result_matrix.byGRN.fdr0.01.trimIndirect0.sif, TE_result_matrix.byGRN.fdr0.01.trimIndirect0.sif.outdegrees.txt
+TE_result_matrix.fdr0.01.sif, TE_result_matrix.fdr0.01.sif.outdegrees.txt
+TE_result_matrix.fdr0.01.trimIndirect0.sif, TE_result_matrix.fdr0.01.trimIndirect0.sif.outdegrees.txt
 ```
+
+<br>
 
 #### Usage
-When specifying the t_degrees
+When specifying the links
 ```angular2html
-python make_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --t_degrees [number of outdegrees]
+python reconstruct_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --links [links] --backend [backend] --device_ids [number of device]
 ```
 
 #### Example
 ```angular2html
-python make_grn.py --fp_rm TE_result_matrix.txt--fp_tf mouse_tf.txt --t_degrees 1000
+python reconstruct_grn.py --fp_rm TE_result_matrix.txt--fp_tf mouse_tf.txt --links 1000 --backend gpu --device_ids 1
 ```
 
 #### Output
 ```angular2html
-TE_result_matrix.byGRN.fdr0.06.sif, TE_result_matrix.byGRN.fdr0.06.sif.outdegrees.txt
-TE_result_matrix.byGRN.fdr0.06.trimIndirect0.sif, TE_result_matrix.byGRN.fdr0.06.trimIndirect0.sif.outdegrees.txt
+TE_result_matrix.links1000.sif, TE_result_matrix.links1000.sif.outdegrees.txt
+TE_result_matrix.links1000.trimIndirect0.sif, TE_result_matrix.links1000.trimIndirect0.sif.outdegrees.txt
 ```
 
 ## TODO

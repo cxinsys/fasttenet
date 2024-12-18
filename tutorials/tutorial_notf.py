@@ -37,7 +37,6 @@ if __name__ == "__main__":
     worker = fte.FastTENET(dpath_exp_data=dpath_exp_data, # Required
                            dpath_trj_data=dpath_trj_data, # Required
                            dpath_branch_data=dpath_branch_data, # Required
-                           dpath_tf_data=dpath_tf_data, # Optional
                            spath_result_matrix=spath_result_matrix, # Optional
                            make_binary=True) # Optional, default: False
 
