@@ -1,0 +1,1 @@
+from fasttenet.inference.inference import NetWeaver
