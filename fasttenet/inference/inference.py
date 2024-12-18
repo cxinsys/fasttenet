@@ -67,7 +67,7 @@ class NetWeaver(object):
             _, inds_inter, _ = np.intersect1d(repeated_sinds, repeated_ainds, return_indices=True)
             inds_diff = np.setdiff1d(np.arange(len(repeated_ainds)), inds_inter)
 
-            pairs = np.array([repeated_ainds[inds_diff], repeated_sinds[inds_diff]]).T
+            pairs = np.array([repeated_sinds[inds_diff], repeated_ainds[inds_diff]]).T
         else:
             pairs = permutations(range(len(self.result_matrix)), 2)
             pairs = np.asarray(tuple(pairs), dtype=np.int32)
@@ -75,8 +75,8 @@ class NetWeaver(object):
         print('Number of pairs: ', len(pairs))
 
         # Indexing to get the 1D arrays
-        source = self.gene_names.T[pairs[:, 1]]
-        target = self.gene_names.T[pairs[:, 0]]
+        source = self.gene_names.T[pairs[:, 0]]
+        target = self.gene_names.T[pairs[:, 1]]
 
         te = self.result_matrix[pairs[:, 0], pairs[:, 1]]
 
@@ -156,8 +156,8 @@ class NetWeaver(object):
             trimmed_pairs = np.concatenate(trimmed_pair_list, axis=0)
             tes = np.concatenate(tes_list, axis=0)
 
-            trimmed_source = self.gene_names.T[trimmed_pairs[:, 1]]
-            trimmed_target = self.gene_names.T[trimmed_pairs[:, 0]]
+            trimmed_source = self.gene_names.T[trimmed_pairs[:, 0]]
+            trimmed_target = self.gene_names.T[trimmed_pairs[:, 1]]
 
             trimmed_te_grn = np.stack((trimmed_source, tes, trimmed_target), axis=1)
 

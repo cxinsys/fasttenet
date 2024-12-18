@@ -89,7 +89,7 @@ class FastTENET(object):
         extended_nn = np.concatenate((['TE'], self._node_name))
         tmp_rm = np.concatenate([extended_nn[None, :], tmp_rm])
 
-        np.savetxt(spath_result_matrix, tmp_rm, delimiter='\t', fmt='%s')
+        np.savetxt(spath_result_matrix, tmp_rm.T, delimiter='\t', fmt='%s')
         print("Save result matrix: {}".format(spath_result_matrix))
 
     # data refining
