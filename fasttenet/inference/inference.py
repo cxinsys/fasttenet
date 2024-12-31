@@ -82,10 +82,10 @@ class NetWeaver(object):
 
         if self.links != 0:
             sorted_inds = np.argsort(te)
-            te_cutoff = te[sorted_inds][:self.links]
-            source_cutoff = source[sorted_inds][:self.links]
-            target_cutoff = target[sorted_inds][:self.links]
-            pairs = pairs[sorted_inds][:self.links]
+            te_cutoff = te[sorted_inds][::-1][:self.links]
+            source_cutoff = source[sorted_inds][::-1][:self.links]
+            target_cutoff = target[sorted_inds][::-1][:self.links]
+            pairs = pairs[sorted_inds][::-1][:self.links]
         else:
             te_zscore = (te - np.mean(te)) / np.std(te)
             te_pval = 1 - scipy.stats.norm.cdf(te_zscore)

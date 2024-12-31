@@ -205,10 +205,10 @@ class FastTENET(object):
                                                  dt=dt
                                                  )
 
-        if self._result_matrix is not None:
+        if self._result_matrix is not None and self._spath_result_matrix is not None:
             self.save_result_matrix(self._spath_result_matrix)
 
-        return self._result_matrix
+        return self._result_matrix.T
 
 
 
