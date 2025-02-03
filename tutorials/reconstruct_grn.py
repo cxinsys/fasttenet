@@ -15,7 +15,7 @@ if __name__ == "__main__":
     parser.add_argument('--links', type=int, dest='links', required=False, default=0)
     parser.add_argument('--trim_threshold', type=float, dest='trim_threshold', required=False, default=0)
     parser.add_argument('--backend', type=str, dest='backend', required=False, default='gpu')
-    parser.add_argument('--device_ids', type=int, dest='device_ids', required=False, default=1)
+    parser.add_argument('--device_id', type=int, dest='device_id', required=False, default=0)
     parser.add_argument('--batch_size', type=int, dest='batch_size', required=False, default=0)
 
     args = parser.parse_args()
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     links = args.links
     trim_threshold = args.trim_threshold
     backend = args.backend
-    device_ids = args.device_ids
+    device_id = args.device_id
     batch_size = args.batch_size
 
     result_matrix = np.loadtxt(fpath_rm, delimiter='\t', dtype=str)
@@ -52,7 +52,7 @@ if __name__ == "__main__":
                            )
 
     grn, trimmed_grn = weaver.run(backend=backend,
-                                  device_ids=device_ids,
+                                  device_ids=[device_id],
                                   batch_size=batch_size)
 
     outdegrees = weaver.count_outdegree(grn)
