@@ -174,7 +174,7 @@ class FastTENET(object):
 
         pairs = np.asarray(tuple(pairs), dtype=np.int32)
 
-        if backend == 'lightning' or backend == 'gpu' or backend == 'cuda':
+        if backend == 'lightning':
             self._mate = mate.MATELightning(arr=arr,
                                             pairs=pairs,
                                             kp=kp,

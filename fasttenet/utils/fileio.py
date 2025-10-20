@@ -12,7 +12,7 @@ def load_exp_data(dpath, make_binary=False):
     else:
         exp_data = np.loadtxt(dpath, delimiter=',', dtype=str)
         node_name = exp_data[0, 1:]
-        exp_data = exp_data[1:, 1:].T.astype(np.float32)
+        exp_data = exp_data[1:, 1:].T.astype(np.float32)  # (gene, cell)
 
         if make_binary==True:
             np.save(dpath[:-4] + '_node_name.npy', node_name)

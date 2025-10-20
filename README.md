@@ -30,7 +30,7 @@ conda activate fasttenet
 ```
 pip install fasttenet
 ```
-- **Default backend framework of the FastTENET is PyTorch Lightning.**
+- **Default backend framework of the FastTENET is PyTorch.**
 - **You need to install other backend frameworks such as CuPy, Jax, and TensorFlow**
 
 <br>
