@@ -368,12 +368,12 @@ reconstruct_grn.py is a tutorial script for the output of grn and outdegree file
 #### Usage
 When specifying an fdr
 ```angular2html
-python reconstruct_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --fdr [fdr] --backend [backend] --device_ids [number of device]
+python reconstruct_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --fdr [fdr] --backend [backend] --device_id [device id]
 ```
 
 #### Example
 ```angular2html
-python reconstruct_grn.py --fp_rm TE_result_matrix.txt --fp_tf mouse_tf.txt --fdr 0.01 --backend gpu --device_ids 1
+python reconstruct_grn.py --fp_rm TE_result_matrix.txt --fp_tf mouse_tfs.txt --fdr 0.01 --backend gpu --device_id 0
 ```
 
 #### Output
@@ -387,12 +387,12 @@ TE_result_matrix.fdr0.01.trimIndirect0.sif, TE_result_matrix.fdr0.01.trimIndirec
 #### Usage
 When specifying the links
 ```angular2html
-python reconstruct_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --links [links] --backend [backend] --device_ids [number of device]
+python reconstruct_grn.py --fp_rm [result matrix path] --fp_tf [tf file path] --links [links] --backend [backend] --device_id [device id]
 ```
 
 #### Example
 ```angular2html
-python reconstruct_grn.py --fp_rm TE_result_matrix.txt--fp_tf mouse_tf.txt --links 1000 --backend gpu --device_ids 1
+python reconstruct_grn.py --fp_rm TE_result_matrix.txt--fp_tf mouse_tfs.txt --links 1000 --backend gpu --device_id 0
 ```
 
 #### Output
